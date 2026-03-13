@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gammes Majeures</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text: #1a1a1a;
+  --text-muted: #666;
+  --border: rgba(0,0,0,0.12);
+  --accent: #185FA5;
+  --altered: #E6F1FB;
+  --altered-text: #0C447C;
+  --correct: #EAF3DE;
+  --correct-text: #3B6D11;
+  --wrong: #FCEBEB;
+  --wrong-text: #A32D2D;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --text: #f0f0f0;
+    --text-muted: #999;
+    --border: rgba(255,255,255,0.12);
+    --accent: #378ADD;
+    --altered: #0C2A45;
+    --altered-text: #85B7EB;
+    --correct: #1a2e0a;
+    --correct-text: #97C459;
+    --wrong: #2e0a0a;
+    --wrong-text: #F09595;
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
+  gap: 0;
+}
+.tabs button {
+  flex: 1;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.tabs button.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Root grid */
+.root-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.root-grid button {
+  padding: 10px 4px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.root-grid button.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Scale display */
+.scale-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.note-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  padding: 10px 8px 8px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}
+.note-pill.altered {
+  background: var(--altered);
+  border-color: var(--altered-text);
+}
+.note-pill .note-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+.note-pill.altered .note-name {
+  color: var(--altered-text);
+}
+.note-pill .degree {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Summary card */
+.summary-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.summary-card .label {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.summary-card .value {
+  font-weight: 600;
+}
+
+/* Quiz */
+.quiz-prompt {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.quiz-prompt .highlight {
+  color: var(--accent);
+}
+.quiz-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.quiz-choices button {
+  padding: 14px 8px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz-choices button.correct {
+  background: var(--correct);
+  border-color: var(--correct-text);
+  color: var(--correct-text);
+}
+.quiz-choices button.wrong {
+  background: var(--wrong);
+  border-color: var(--wrong-text);
+  color: var(--wrong-text);
+}
+.quiz-choices button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.quiz-choices button.correct { opacity: 1; }
+
+.quiz-score {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.quiz-next {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.quiz-next:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th, td {
+  padding: 8px 6px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+th {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+}
+th.sortable:hover { color: var(--accent); }
+td.altered {
+  background: var(--altered);
+  color: var(--altered-text);
+  font-weight: 600;
+}
+td.root-cell {
+  font-weight: 700;
+}
+.sort-arrow { font-size: 11px; margin-left: 2px; }
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+  font-size: 15px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Gammes Majeures</h1>
+
+  <nav class="tabs">
+    <button class="active" data-tab="learn">Apprendre</button>
+    <button data-tab="quiz">Quiz</button>
+    <button data-tab="table">Tableau</button>
+  </nav>
+
+  <!-- Learn -->
+  <div id="learn" class="tab-content active">
+    <div class="root-grid" id="rootGrid"></div>
+    <div id="scaleResult"></div>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz" class="tab-content">
+    <div class="quiz-score" id="quizScore">Score : 0 / 0</div>
+    <div class="quiz-prompt" id="quizPrompt"></div>
+    <div class="quiz-choices" id="quizChoices"></div>
+    <button class="quiz-next" id="quizNext">Nouvelle question</button>
+  </div>
+
+  <!-- Table -->
+  <div id="table" class="tab-content">
+    <div class="table-wrap">
+      <table id="scaleTable">
+        <thead>
+          <tr>
+            <th>Tonique</th>
+            <th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th><th>VII</th>
+            <th class="sortable" id="sortAlt">Alt. <span class="sort-arrow">▲</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var ROOTS = ['Do','Sol','Re','La','Mi','Si','Fa#','Fa','Sib','Mib','Lab','Reb'];
+
+  var ROOT_SHARPS = {
+    'Do': 0, 'Sol': 1, 'Re': 2, 'La': 3, 'Mi': 4, 'Si': 5, 'Fa#': 6,
+    'Fa': -1, 'Sib': -2, 'Mib': -3, 'Lab': -4, 'Reb': -5
+  };
+
+  var CHROMATIC_SHARPS = ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
+  var CHROMATIC_FLATS  = ['Do','Reb','Re','Mib','Mi','Fa','Solb','Sol','Lab','La','Sib','Si'];
+
+  var FLAT_ROOTS = ['Fa','Sib','Mib','Lab','Reb','Solb'];
+
+  var INTERVALS = [0, 2, 4, 5, 7, 9, 11, 12];
+  var DEGREES = ['I','II','III','IV','V','VI','VII','I'];
+
+  // Natural note names (without accidentals)
+  var NATURAL_NOTES = ['Do','Re','Mi','Fa','Sol','La','Si'];
+
+  function getChromatic(root) {
+    return FLAT_ROOTS.indexOf(root) !== -1 ? CHROMATIC_FLATS : CHROMATIC_SHARPS;
+  }
+
+  // Get the natural note name base (e.g., 'Do#' -> 'Do', 'Reb' -> 'Re')
+  function getNaturalBase(note) {
+    if (note.length > 2) {
+      // 'Solb' or 'Sol#'
+      return note.replace(/#|b$/, '');
+    }
+    if (note.endsWith('#') || note.endsWith('b')) {
+      return note.slice(0, -1);
+    }
+    return note;
+  }
+
+  function getScale(root) {
+    var chromatic = getChromatic(root);
+    var rootIndex = chromatic.indexOf(root);
+    if (rootIndex === -1) {
+      // Handle Fa# with sharps chromatic
+      chromatic = CHROMATIC_SHARPS;
+      rootIndex = chromatic.indexOf(root);
+    }
+
+    // Build scale using proper note name logic
+    // Each degree should use a different natural note name
+    var rootNatural = getNaturalBase(root);
+    var rootNaturalIdx = NATURAL_NOTES.indexOf(rootNatural);
+
+    var notes = [];
+    for (var i = 0; i < 8; i++) {
+      var semitones = INTERVALS[i] % 12;
+      var chrIdx = (rootIndex + semitones) % 12;
+      var note = chromatic[chrIdx];
+
+      // For the octave (8th note), same as root
+      if (i === 7) {
+        notes.push(notes[0]);
+        continue;
+      }
+
+      // Expected natural note for this degree
+      var expectedNaturalIdx = (rootNaturalIdx + i) % 7;
+      var expectedNatural = NATURAL_NOTES[expectedNaturalIdx];
+      var actualNatural = getNaturalBase(note);
+
+      // If the chromatic note's natural base doesn't match expected,
+      // we need to respell it with the correct natural base
+      if (actualNatural !== expectedNatural) {
+        note = respell(chrIdx, expectedNatural);
+      }
+
+      notes.push(note);
+    }
+    return notes;
+  }
+
+  function respell(chromaticIndex, targetNatural) {
+    // Find where the target natural sits in the chromatic scale
+    var naturalPositions = { 'Do': 0, 'Re': 2, 'Mi': 4, 'Fa': 5, 'Sol': 7, 'La': 9, 'Si': 11 };
+    var natPos = naturalPositions[targetNatural];
+    var diff = ((chromaticIndex - natPos) + 12) % 12;
+    if (diff === 0) return targetNatural;
+    if (diff === 1) return targetNatural + '#';
+    if (diff === 11) return targetNatural + 'b';
+    // Double sharp/flat edge case (shouldn't happen for major scales)
+    return targetNatural + (diff <= 6 ? '#' : 'b');
+  }
+
+  function isAltered(note) {
+    return note.indexOf('#') !== -1 || note.indexOf('b') !== -1;
+  }
+
+  function altInfo(root) {
+    var n = ROOT_SHARPS[root];
+    if (n === 0) return { count: 0, type: '', label: 'Aucune alteration' };
+    if (n > 0) return { count: n, type: 'dieses', label: n + ' diese' + (n > 1 ? 's' : '') };
+    return { count: -n, type: 'bemols', label: (-n) + ' bemol' + (-n > 1 ? 's' : '') };
+  }
+
+  // ---- Tabs ----
+  var tabBtns = document.querySelectorAll('.tabs button');
+  var tabContents = document.querySelectorAll('.tab-content');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      tabContents.forEach(function(c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'quiz' && quizTotal === 0) newQuestion();
+    });
+  });
+
+  // ---- Learn ----
+  var rootGrid = document.getElementById('rootGrid');
+  var scaleResult = document.getElementById('scaleResult');
+
+  ROOTS.forEach(function(root) {
+    var btn = document.createElement('button');
+    btn.textContent = root;
+    btn.addEventListener('click', function() {
+      rootGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      showScale(root);
+    });
+    rootGrid.appendChild(btn);
+  });
+
+  function showScale(root) {
+    var notes = getScale(root);
+    var info = altInfo(root);
+    var alteredNotes = [];
+    for (var i = 0; i < 7; i++) {
+      if (isAltered(notes[i])) alteredNotes.push(notes[i]);
+    }
+
+    var html = '<div class="scale-display">';
+    for (var i = 0; i < 8; i++) {
+      var alt = isAltered(notes[i]) ? ' altered' : '';
+      html += '<div class="note-pill' + alt + '">' +
+        '<span class="note-name">' + notes[i] + '</span>' +
+        '<span class="degree">' + DEGREES[i] + '</span>' +
+        '</div>';
+    }
+    html += '</div>';
+
+    html += '<div class="summary-card">' +
+      '<div><span class="label">Alterations : </span><span class="value">' + info.label + '</span></div>';
+    if (alteredNotes.length > 0) {
+      html += '<div><span class="label">Notes alterees : </span><span class="value">' + alteredNotes.join(', ') + '</span></div>';
+    }
+    html += '<div><span class="label">Gamme : </span><span class="value">' + notes.slice(0, 7).join(' — ') + '</span></div>';
+    html += '</div>';
+
+    scaleResult.innerHTML = html;
+  }
+
+  // ---- Quiz ----
+  var quizCorrect = 0;
+  var quizTotal = 0;
+  var currentAnswer = '';
+  var answered = false;
+
+  var quizScore = document.getElementById('quizScore');
+  var quizPrompt = document.getElementById('quizPrompt');
+  var quizChoices = document.getElementById('quizChoices');
+  var quizNext = document.getElementById('quizNext');
+
+  quizNext.addEventListener('click', newQuestion);
+
+  function newQuestion() {
+    answered = false;
+    var root = ROOTS[Math.floor(Math.random() * ROOTS.length)];
+    var degreeIdx = Math.floor(Math.random() * 7);
+    var scale = getScale(root);
+    currentAnswer = scale[degreeIdx];
+
+    quizPrompt.innerHTML = 'Quelle est la note au degre <span class="highlight">' +
+      DEGREES[degreeIdx] + '</span> de la gamme de <span class="highlight">' + root + '</span> ?';
+
+    // Build 4 unique choices including the answer
+    var allNotes = [];
+    ROOTS.forEach(function(r) {
+      var s = getScale(r);
+      for (var i = 0; i < 7; i++) {
+        if (allNotes.indexOf(s[i]) === -1) allNotes.push(s[i]);
+      }
+    });
+
+    var choices = [currentAnswer];
+    while (choices.length < 4) {
+      var pick = allNotes[Math.floor(Math.random() * allNotes.length)];
+      if (choices.indexOf(pick) === -1) choices.push(pick);
+    }
+    // Shuffle
+    for (var i = choices.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = choices[i]; choices[i] = choices[j]; choices[j] = tmp;
+    }
+
+    quizChoices.innerHTML = '';
+    choices.forEach(function(c) {
+      var btn = document.createElement('button');
+      btn.textContent = c;
+      btn.addEventListener('click', function() { checkAnswer(btn, c); });
+      quizChoices.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(btn, chosen) {
+    if (answered) return;
+    answered = true;
+    quizTotal++;
+
+    var buttons = quizChoices.querySelectorAll('button');
+    buttons.forEach(function(b) {
+      b.disabled = true;
+      if (b.textContent === currentAnswer) b.classList.add('correct');
+    });
+
+    if (chosen === currentAnswer) {
+      quizCorrect++;
+    } else {
+      btn.classList.add('wrong');
+    }
+    quizScore.textContent = 'Score : ' + quizCorrect + ' / ' + quizTotal;
+  }
+
+  // ---- Table ----
+  var sortAsc = true;
+  var sortBtn = document.getElementById('sortAlt');
+  var tableBody = document.getElementById('tableBody');
+
+  function renderTable() {
+    var rows = ROOTS.map(function(root) {
+      return { root: root, scale: getScale(root), info: altInfo(root), sharps: ROOT_SHARPS[root] };
+    });
+
+    rows.sort(function(a, b) {
+      return sortAsc ? a.sharps - b.sharps : b.sharps - a.sharps;
+    });
+
+    sortBtn.innerHTML = 'Alt. <span class="sort-arrow">' + (sortAsc ? '▲' : '▼') + '</span>';
+
+    var html = '';
+    rows.forEach(function(r) {
+      html += '<tr><td class="root-cell">' + r.root + '</td>';
+      for (var i = 0; i < 7; i++) {
+        var cls = isAltered(r.scale[i]) ? ' class="altered"' : '';
+        html += '<td' + cls + '>' + r.scale[i] + '</td>';
+      }
+      var altLabel = r.info.count === 0 ? '—' : (r.info.count + (r.info.type === 'dieses' ? '♯' : '♭'));
+      html += '<td>' + altLabel + '</td></tr>';
+    });
+    tableBody.innerHTML = html;
+  }
+
+  sortBtn.addEventListener('click', function() {
+    sortAsc = !sortAsc;
+    renderTable();
+  });
+
+  renderTable();
+})();
+</script>
+</body>
+</html>
