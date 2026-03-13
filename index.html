@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gammes Majeures</title>
+<meta name="robots" content="noindex, nofollow">
+<!--suppress CssUnusedSymbol -->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -74,7 +76,7 @@ h1 {
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
@@ -86,6 +88,33 @@ h1 {
 
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* Subtabs */
+.subtabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+}
+.subtabs button {
+  flex: 1;
+  padding: 8px 8px;
+  border: none;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.subtabs button.active {
+  background: var(--accent);
+  color: #fff;
+}
+.sub-content { display: none; }
+.sub-content.active { display: block; }
 
 /* Root grid */
 .root-grid {
@@ -161,6 +190,38 @@ h1 {
 }
 .summary-card .value {
   font-weight: 600;
+}
+
+/* Quiz filter */
+.quiz-filter {
+  margin-bottom: 16px;
+}
+.quiz-filter-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.quiz-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.quiz-filter-options button {
+  padding: 6px 10px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz-filter-options button.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
 }
 
 /* Quiz */
@@ -270,12 +331,248 @@ td.root-cell {
 }
 .sort-arrow { font-size: 11px; margin-left: 2px; }
 
-.empty-state {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 40px 0;
-  font-size: 15px;
+/* Mode toggle */
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--border);
 }
+.mode-toggle button {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mode-toggle button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.mode-toggle + .mode-toggle {
+  margin-top: 8px;
+}
+
+/* Chord cards */
+.chord-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.chord-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px 10px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}
+.chord-card .chord-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+.chord-card .chord-quality {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.chord-card .chord-degree {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.chord-card.minor-chord {
+  border-color: var(--border);
+}
+.chord-card.dim-chord {
+  background: var(--altered);
+  border-color: var(--altered-text);
+}
+.chord-card.dim-chord .chord-name {
+  color: var(--altered-text);
+}
+.chord-card .chord-notes {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Fretboard */
+.fret-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -16px;
+  padding: 0 0 12px 0;
+}
+.fretboard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px repeat(18, 52px);
+  grid-template-rows: repeat(6, 36px);
+  min-width: fit-content;
+  margin: 0 16px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+/* Wood background */
+.fret-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--fret-color);
+  border-bottom: none;
+  background: var(--wood);
+}
+:root {
+  --wood: #F5E6C8;
+  --wood-dark: #E8D4A8;
+  --fret-color: #C0C0C0;
+  --nut-color: #F0F0E0;
+  --string-color: #A0A0A0;
+  --string-shadow: rgba(0,0,0,0.15);
+  --dot-note: var(--accent);
+  --dot-root: #D4442A;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wood: #3D2E1E;
+    --wood-dark: #2E2218;
+    --fret-color: #6A6A6A;
+    --nut-color: #5A5A50;
+    --string-color: #888;
+    --string-shadow: rgba(0,0,0,0.4);
+    --dot-root: #E8654E;
+  }
+}
+/* Open string labels (fret 0 column) */
+.fret-cell.open-string {
+  background: var(--bg-secondary);
+  border-right: 4px solid var(--nut-color);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+/* Alternating fret shade */
+.fret-cell:nth-child(even) {
+  background: var(--wood-dark);
+}
+.fret-cell.open-string:nth-child(even) {
+  background: var(--bg-secondary);
+}
+/* String line */
+.fret-cell::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: var(--string-w, 1px);
+  margin-top: calc(var(--string-w, 1px) / -2);
+  background: var(--string-color);
+  box-shadow: 0 1px 1px var(--string-shadow);
+  z-index: 1;
+  pointer-events: none;
+}
+/* String thickness per row (low E = thick, high E = thin) */
+.fret-cell[data-string="0"] { --string-w: 4px; }
+.fret-cell[data-string="1"] { --string-w: 3px; }
+.fret-cell[data-string="2"] { --string-w: 3px; }
+.fret-cell[data-string="3"] { --string-w: 2px; }
+.fret-cell[data-string="4"] { --string-w: 2px; }
+.fret-cell[data-string="5"] { --string-w: 1px; }
+
+/* Note dot */
+.fret-dot {
+  position: relative;
+  z-index: 2;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--dot-note);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  line-height: 1;
+}
+.fret-dot.root {
+  background: var(--dot-root);
+  width: 30px; height: 30px;
+  font-size: 12px;
+}
+.fret-dot.altered-dot {
+  background: var(--altered-text);
+}
+
+/* Fret numbers */
+.fret-numbers {
+  display: grid;
+  grid-template-columns: 40px repeat(18, 52px);
+  min-width: fit-content;
+  margin: 0 16px;
+}
+.fret-num {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 0 0;
+  font-weight: 600;
+}
+/* Fret markers (dots on frets 3,5,7,9,12,15) */
+.fret-num.marker::before {
+  content: '';
+  display: block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  margin: 0 auto 2px;
+}
+.fret-num.double-marker::before {
+  content: '';
+  display: block;
+  width: 16px; height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  margin: 0 auto 2px;
+}
+
+/* Legend */
+.fret-legend {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.fret-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.fret-legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.fret-legend-dot.root { background: var(--dot-root); }
+.fret-legend-dot.note { background: var(--dot-note); }
+.fret-legend-dot.alt { background: var(--altered-text); }
 </style>
 </head>
 <body>
@@ -285,36 +582,68 @@ td.root-cell {
   <nav class="tabs">
     <button class="active" data-tab="learn">Apprendre</button>
     <button data-tab="quiz">Quiz</button>
-    <button data-tab="table">Tableau</button>
+    <button data-tab="ref">Reference</button>
   </nav>
 
-  <!-- Learn -->
+  <!-- Apprendre -->
   <div id="learn" class="tab-content active">
-    <div class="root-grid" id="rootGrid"></div>
-    <div id="scaleResult"></div>
+    <div class="subtabs">
+      <button class="active" data-sub="learn-scale">Gamme</button>
+      <button data-sub="learn-fretboard">Manche</button>
+    </div>
+    <div id="learn-scale" class="sub-content active">
+      <div class="root-grid" id="rootGrid"></div>
+      <div id="scaleResult"></div>
+    </div>
+    <div id="learn-fretboard" class="sub-content">
+      <div class="root-grid" id="fretRootGrid"></div>
+      <div id="fretResult"></div>
+    </div>
   </div>
 
   <!-- Quiz -->
   <div id="quiz" class="tab-content">
+    <div class="quiz-filter">
+      <label class="quiz-filter-label">Tonalite :</label>
+      <div class="quiz-filter-options" id="quizFilter"></div>
+    </div>
     <div class="quiz-score" id="quizScore">Score : 0 / 0</div>
     <div class="quiz-prompt" id="quizPrompt"></div>
     <div class="quiz-choices" id="quizChoices"></div>
     <button class="quiz-next" id="quizNext">Nouvelle question</button>
   </div>
 
-  <!-- Table -->
-  <div id="table" class="tab-content">
-    <div class="table-wrap">
-      <table id="scaleTable">
-        <thead>
-          <tr>
-            <th>Tonique</th>
-            <th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th><th>VII</th>
-            <th class="sortable" id="sortAlt">Alt. <span class="sort-arrow">▲</span></th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+  <!-- Reference -->
+  <div id="ref" class="tab-content">
+    <div class="subtabs">
+      <button class="active" data-sub="ref-table">Tableau</button>
+      <button data-sub="ref-harmony">Harmonisation</button>
+    </div>
+    <div id="ref-table" class="sub-content active">
+      <div class="table-wrap">
+        <table id="scaleTable">
+          <thead>
+            <tr>
+              <th>Tonique</th>
+              <th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th><th>VII</th>
+              <th class="sortable" id="sortAlt">Alt. <span class="sort-arrow">▲</span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="ref-harmony" class="sub-content">
+      <div class="mode-toggle" id="modeToggle">
+        <button class="active" data-mode="major">Majeur</button>
+        <button data-mode="minor">Mineur</button>
+      </div>
+      <div class="mode-toggle" id="voicingToggle">
+        <button class="active" data-voicing="triad">Triade</button>
+        <button data-voicing="tetrad">Tetrade</button>
+      </div>
+      <div class="root-grid" id="harmonyRootGrid"></div>
+      <div id="harmonyResult"></div>
     </div>
   </div>
 </div>
@@ -323,210 +652,261 @@ td.root-cell {
 (function() {
   'use strict';
 
-  var ROOTS = ['Do','Sol','Re','La','Mi','Si','Fa#','Fa','Sib','Mib','Lab','Reb'];
+  const ROOTS = ['Do','Sol','Re','La','Mi','Si','Fa#','Fa','Sib','Mib','Lab','Reb'];
 
-  var ROOT_SHARPS = {
+  const ROOT_SHARPS = {
     'Do': 0, 'Sol': 1, 'Re': 2, 'La': 3, 'Mi': 4, 'Si': 5, 'Fa#': 6,
     'Fa': -1, 'Sib': -2, 'Mib': -3, 'Lab': -4, 'Reb': -5
   };
 
-  var CHROMATIC_SHARPS = ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
-  var CHROMATIC_FLATS  = ['Do','Reb','Re','Mib','Mi','Fa','Solb','Sol','Lab','La','Sib','Si'];
+  const CHROMATIC_SHARPS = ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
+  const CHROMATIC_FLATS  = ['Do','Reb','Re','Mib','Mi','Fa','Solb','Sol','Lab','La','Sib','Si'];
 
-  var FLAT_ROOTS = ['Fa','Sib','Mib','Lab','Reb','Solb'];
+  const FLAT_ROOTS = ['Fa','Sib','Mib','Lab','Reb','Solb'];
 
-  var INTERVALS = [0, 2, 4, 5, 7, 9, 11, 12];
-  var DEGREES = ['I','II','III','IV','V','VI','VII','I'];
+  const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11, 12];
+  const MINOR_INTERVALS = [0, 2, 3, 5, 7, 8, 10, 12];
+  const DEGREES = ['I','II','III','IV','V','VI','VII','I'];
 
-  // Natural note names (without accidentals)
-  var NATURAL_NOTES = ['Do','Re','Mi','Fa','Sol','La','Si'];
+  const MAJOR_QUALITIES = ['Maj','min','min','Maj','Maj','min','dim'];
+  const MINOR_QUALITIES = ['min','dim','Maj','min','min','Maj','Maj'];
+  const MAJOR_TETRAD_QUALITIES = ['Maj7','m7','m7','Maj7','7','m7','m7b5'];
+  const MINOR_TETRAD_QUALITIES = ['m7','m7b5','Maj7','m7','m7','Maj7','7'];
+  const MAJOR_DEGREES_HARMONY = ['I','ii','iii','IV','V','vi','vii\u00B0'];
+  const MINOR_DEGREES_HARMONY = ['i','ii\u00B0','III','iv','v','VI','VII'];
+
+  const NATURAL_NOTES = ['Do','Re','Mi','Fa','Sol','La','Si'];
+  const NATURAL_POSITIONS = { 'Do': 0, 'Re': 2, 'Mi': 4, 'Fa': 5, 'Sol': 7, 'La': 9, 'Si': 11 };
+
+  const QUALITY_LABELS = {
+    'Maj': 'Majeur', 'min': 'Mineur', 'dim': 'Diminue',
+    'Maj7': 'Maj7', 'm7': 'Min7', '7': 'Dom7', 'm7b5': 'Min7b5'
+  };
+
+  const CHORD_SUFFIXES = {
+    'Maj': '', 'min': 'm', 'dim': 'dim',
+    'Maj7': 'Maj7', 'm7': 'm7', '7': '7', 'm7b5': 'm7b5'
+  };
+
+  // ---- Music theory helpers ----
 
   function getChromatic(root) {
-    return FLAT_ROOTS.indexOf(root) !== -1 ? CHROMATIC_FLATS : CHROMATIC_SHARPS;
+    return FLAT_ROOTS.includes(root) ? CHROMATIC_FLATS : CHROMATIC_SHARPS;
   }
 
-  // Get the natural note name base (e.g., 'Do#' -> 'Do', 'Reb' -> 'Re')
   function getNaturalBase(note) {
-    if (note.length > 2) {
-      // 'Solb' or 'Sol#'
-      return note.replace(/#|b$/, '');
-    }
-    if (note.endsWith('#') || note.endsWith('b')) {
-      return note.slice(0, -1);
-    }
+    if (note.length > 2) return note.replace(/#|b$/, '');
+    if (note.endsWith('#') || note.endsWith('b')) return note.slice(0, -1);
     return note;
   }
 
-  function getScale(root) {
-    var chromatic = getChromatic(root);
-    var rootIndex = chromatic.indexOf(root);
+  function respell(chromaticIndex, targetNatural) {
+    const natPos = NATURAL_POSITIONS[targetNatural];
+    const diff = ((chromaticIndex - natPos) + 12) % 12;
+    if (diff === 0) return targetNatural;
+    if (diff === 1) return targetNatural + '#';
+    if (diff === 11) return targetNatural + 'b';
+    return targetNatural + (diff <= 6 ? '#' : 'b');
+  }
+
+  function buildScale(root, intervals) {
+    let chromatic = getChromatic(root);
+    let rootIndex = chromatic.indexOf(root);
     if (rootIndex === -1) {
-      // Handle Fa# with sharps chromatic
       chromatic = CHROMATIC_SHARPS;
       rootIndex = chromatic.indexOf(root);
     }
 
-    // Build scale using proper note name logic
-    // Each degree should use a different natural note name
-    var rootNatural = getNaturalBase(root);
-    var rootNaturalIdx = NATURAL_NOTES.indexOf(rootNatural);
+    const rootNaturalIdx = NATURAL_NOTES.indexOf(getNaturalBase(root));
+    const notes = [];
 
-    var notes = [];
-    for (var i = 0; i < 8; i++) {
-      var semitones = INTERVALS[i] % 12;
-      var chrIdx = (rootIndex + semitones) % 12;
-      var note = chromatic[chrIdx];
+    for (let i = 0; i < 8; i++) {
+      if (i === 7) { notes.push(notes[0]); continue; }
 
-      // For the octave (8th note), same as root
-      if (i === 7) {
-        notes.push(notes[0]);
-        continue;
-      }
+      const chrIdx = (rootIndex + intervals[i] % 12) % 12;
+      let note = chromatic[chrIdx];
+      const expectedNatural = NATURAL_NOTES[(rootNaturalIdx + i) % 7];
 
-      // Expected natural note for this degree
-      var expectedNaturalIdx = (rootNaturalIdx + i) % 7;
-      var expectedNatural = NATURAL_NOTES[expectedNaturalIdx];
-      var actualNatural = getNaturalBase(note);
-
-      // If the chromatic note's natural base doesn't match expected,
-      // we need to respell it with the correct natural base
-      if (actualNatural !== expectedNatural) {
+      if (getNaturalBase(note) !== expectedNatural) {
         note = respell(chrIdx, expectedNatural);
       }
-
       notes.push(note);
     }
     return notes;
   }
 
-  function respell(chromaticIndex, targetNatural) {
-    // Find where the target natural sits in the chromatic scale
-    var naturalPositions = { 'Do': 0, 'Re': 2, 'Mi': 4, 'Fa': 5, 'Sol': 7, 'La': 9, 'Si': 11 };
-    var natPos = naturalPositions[targetNatural];
-    var diff = ((chromaticIndex - natPos) + 12) % 12;
-    if (diff === 0) return targetNatural;
-    if (diff === 1) return targetNatural + '#';
-    if (diff === 11) return targetNatural + 'b';
-    // Double sharp/flat edge case (shouldn't happen for major scales)
-    return targetNatural + (diff <= 6 ? '#' : 'b');
+  function getScale(root) {
+    return buildScale(root, MAJOR_INTERVALS);
   }
 
   function isAltered(note) {
-    return note.indexOf('#') !== -1 || note.indexOf('b') !== -1;
+    return note.includes('#') || note.includes('b');
   }
 
   function altInfo(root) {
-    var n = ROOT_SHARPS[root];
+    const n = ROOT_SHARPS[root];
     if (n === 0) return { count: 0, type: '', label: 'Aucune alteration' };
     if (n > 0) return { count: n, type: 'dieses', label: n + ' diese' + (n > 1 ? 's' : '') };
     return { count: -n, type: 'bemols', label: (-n) + ' bemol' + (-n > 1 ? 's' : '') };
   }
 
+  function getChordNotes(scale, degreeIdx, isTetrad) {
+    const notes = [
+      scale[degreeIdx],
+      scale[(degreeIdx + 2) % 7],
+      scale[(degreeIdx + 4) % 7]
+    ];
+    if (isTetrad) notes.push(scale[(degreeIdx + 6) % 7]);
+    return notes;
+  }
+
   // ---- Tabs ----
-  var tabBtns = document.querySelectorAll('.tabs button');
-  var tabContents = document.querySelectorAll('.tab-content');
-  tabBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      tabBtns.forEach(function(b) { b.classList.remove('active'); });
-      tabContents.forEach(function(c) { c.classList.remove('active'); });
+  const tabBtns = document.querySelectorAll('.tabs button');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
       if (btn.dataset.tab === 'quiz' && quizTotal === 0) newQuestion();
     });
   });
 
-  // ---- Learn ----
-  var rootGrid = document.getElementById('rootGrid');
-  var scaleResult = document.getElementById('scaleResult');
-
-  ROOTS.forEach(function(root) {
-    var btn = document.createElement('button');
-    btn.textContent = root;
-    btn.addEventListener('click', function() {
-      rootGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      showScale(root);
+  // ---- Subtabs ----
+  document.querySelectorAll('.subtabs').forEach(bar => {
+    bar.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = bar.parentElement;
+        bar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        parent.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.sub).classList.add('active');
+      });
     });
-    rootGrid.appendChild(btn);
   });
 
-  function showScale(root) {
-    var notes = getScale(root);
-    var info = altInfo(root);
-    var alteredNotes = [];
-    for (var i = 0; i < 7; i++) {
-      if (isAltered(notes[i])) alteredNotes.push(notes[i]);
-    }
+  // ---- Utility: build root grid ----
+  function buildRootGrid(container, onClick) {
+    ROOTS.forEach(root => {
+      const btn = document.createElement('button');
+      btn.textContent = root;
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onClick(root);
+      });
+      container.appendChild(btn);
+    });
+  }
 
-    var html = '<div class="scale-display">';
-    for (var i = 0; i < 8; i++) {
-      var alt = isAltered(notes[i]) ? ' altered' : '';
-      html += '<div class="note-pill' + alt + '">' +
-        '<span class="note-name">' + notes[i] + '</span>' +
-        '<span class="degree">' + DEGREES[i] + '</span>' +
-        '</div>';
+  // ---- Learn ----
+  const scaleResult = document.getElementById('scaleResult');
+  buildRootGrid(document.getElementById('rootGrid'), showScale);
+
+  function showScale(root) {
+    const notes = getScale(root);
+    const info = altInfo(root);
+    const alteredNotes = notes.slice(0, 7).filter(isAltered);
+
+    let html = '<div class="scale-display">';
+    for (let i = 0; i < 8; i++) {
+      const alt = isAltered(notes[i]) ? ' altered' : '';
+      html += `<div class="note-pill${alt}">` +
+        `<span class="note-name">${notes[i]}</span>` +
+        `<span class="degree">${DEGREES[i]}</span></div>`;
     }
     html += '</div>';
 
     html += '<div class="summary-card">' +
-      '<div><span class="label">Alterations : </span><span class="value">' + info.label + '</span></div>';
+      `<div><span class="label">Alterations : </span><span class="value">${info.label}</span></div>`;
     if (alteredNotes.length > 0) {
-      html += '<div><span class="label">Notes alterees : </span><span class="value">' + alteredNotes.join(', ') + '</span></div>';
+      html += `<div><span class="label">Notes alterees : </span><span class="value">${alteredNotes.join(', ')}</span></div>`;
     }
-    html += '<div><span class="label">Gamme : </span><span class="value">' + notes.slice(0, 7).join(' — ') + '</span></div>';
+    html += `<div><span class="label">Gamme : </span><span class="value">${notes.slice(0, 7).join(' — ')}</span></div>`;
     html += '</div>';
 
     scaleResult.innerHTML = html;
   }
 
   // ---- Quiz ----
-  var quizCorrect = 0;
-  var quizTotal = 0;
-  var currentAnswer = '';
-  var answered = false;
+  let quizCorrect = 0;
+  let quizTotal = 0;
+  let currentAnswer = '';
+  let answered = false;
+  let quizFilterRoot = null;
 
-  var quizScore = document.getElementById('quizScore');
-  var quizPrompt = document.getElementById('quizPrompt');
-  var quizChoices = document.getElementById('quizChoices');
-  var quizNext = document.getElementById('quizNext');
+  const quizScore = document.getElementById('quizScore');
+  const quizPrompt = document.getElementById('quizPrompt');
+  const quizChoices = document.getElementById('quizChoices');
+  const quizNext = document.getElementById('quizNext');
+  const quizFilter = document.getElementById('quizFilter');
+
+  // Build filter buttons
+  const allBtn = document.createElement('button');
+  allBtn.textContent = 'Toutes';
+  allBtn.classList.add('active');
+  allBtn.addEventListener('click', () => {
+    quizFilterRoot = null;
+    quizFilter.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    allBtn.classList.add('active');
+    resetQuiz();
+  });
+  quizFilter.appendChild(allBtn);
+
+  ROOTS.forEach(root => {
+    const btn = document.createElement('button');
+    btn.textContent = root;
+    btn.addEventListener('click', () => {
+      quizFilterRoot = root;
+      quizFilter.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      resetQuiz();
+    });
+    quizFilter.appendChild(btn);
+  });
+
+  function resetQuiz() {
+    quizCorrect = 0;
+    quizTotal = 0;
+    quizScore.textContent = 'Score : 0 / 0';
+    newQuestion();
+  }
 
   quizNext.addEventListener('click', newQuestion);
 
   function newQuestion() {
     answered = false;
-    var root = ROOTS[Math.floor(Math.random() * ROOTS.length)];
-    var degreeIdx = Math.floor(Math.random() * 7);
-    var scale = getScale(root);
+    const root = quizFilterRoot || ROOTS[Math.floor(Math.random() * ROOTS.length)];
+    const degreeIdx = Math.floor(Math.random() * 7);
+    const scale = getScale(root);
     currentAnswer = scale[degreeIdx];
 
-    quizPrompt.innerHTML = 'Quelle est la note au degre <span class="highlight">' +
-      DEGREES[degreeIdx] + '</span> de la gamme de <span class="highlight">' + root + '</span> ?';
+    quizPrompt.innerHTML = `Quelle est la note au degre <span class="highlight">${DEGREES[degreeIdx]}</span> de la gamme de <span class="highlight">${root}</span> ?`;
 
-    // Build 4 unique choices including the answer
-    var allNotes = [];
-    ROOTS.forEach(function(r) {
-      var s = getScale(r);
-      for (var i = 0; i < 7; i++) {
-        if (allNotes.indexOf(s[i]) === -1) allNotes.push(s[i]);
+    const allNotes = [];
+    ROOTS.forEach(r => {
+      const s = getScale(r);
+      for (let i = 0; i < 7; i++) {
+        if (!allNotes.includes(s[i])) allNotes.push(s[i]);
       }
     });
 
-    var choices = [currentAnswer];
+    const choices = [currentAnswer];
     while (choices.length < 4) {
-      var pick = allNotes[Math.floor(Math.random() * allNotes.length)];
-      if (choices.indexOf(pick) === -1) choices.push(pick);
+      const pick = allNotes[Math.floor(Math.random() * allNotes.length)];
+      if (!choices.includes(pick)) choices.push(pick);
     }
-    // Shuffle
-    for (var i = choices.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = choices[i]; choices[i] = choices[j]; choices[j] = tmp;
+    for (let i = choices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [choices[i], choices[j]] = [choices[j], choices[i]];
     }
 
     quizChoices.innerHTML = '';
-    choices.forEach(function(c) {
-      var btn = document.createElement('button');
+    choices.forEach(c => {
+      const btn = document.createElement('button');
       btn.textContent = c;
-      btn.addEventListener('click', function() { checkAnswer(btn, c); });
+      btn.addEventListener('click', () => checkAnswer(btn, c));
       quizChoices.appendChild(btn);
     });
   }
@@ -536,8 +916,7 @@ td.root-cell {
     answered = true;
     quizTotal++;
 
-    var buttons = quizChoices.querySelectorAll('button');
-    buttons.forEach(function(b) {
+    quizChoices.querySelectorAll('button').forEach(b => {
       b.disabled = true;
       if (b.textContent === currentAnswer) b.classList.add('correct');
     });
@@ -547,39 +926,169 @@ td.root-cell {
     } else {
       btn.classList.add('wrong');
     }
-    quizScore.textContent = 'Score : ' + quizCorrect + ' / ' + quizTotal;
+    quizScore.textContent = `Score : ${quizCorrect} / ${quizTotal}`;
+  }
+
+  // ---- Harmony ----
+  let harmonyMode = 'major';
+  let harmonyVoicing = 'triad';
+  let harmonyRoot = null;
+  const harmonyResult = document.getElementById('harmonyResult');
+  const modeToggle = document.getElementById('modeToggle');
+  const voicingToggle = document.getElementById('voicingToggle');
+
+  function setupToggle(container, onSelect) {
+    container.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onSelect(btn);
+      });
+    });
+  }
+
+  setupToggle(modeToggle, btn => {
+    harmonyMode = btn.dataset.mode;
+    if (harmonyRoot) showHarmony(harmonyRoot);
+  });
+
+  setupToggle(voicingToggle, btn => {
+    harmonyVoicing = btn.dataset.voicing;
+    if (harmonyRoot) showHarmony(harmonyRoot);
+  });
+
+  buildRootGrid(document.getElementById('harmonyRootGrid'), root => {
+    harmonyRoot = root;
+    showHarmony(root);
+  });
+
+  function showHarmony(root) {
+    const isMajor = harmonyMode === 'major';
+    const isTetrad = harmonyVoicing === 'tetrad';
+    const scale = buildScale(root, isMajor ? MAJOR_INTERVALS : MINOR_INTERVALS);
+    const qualities = isTetrad
+      ? (isMajor ? MAJOR_TETRAD_QUALITIES : MINOR_TETRAD_QUALITIES)
+      : (isMajor ? MAJOR_QUALITIES : MINOR_QUALITIES);
+    const degreeLabels = isMajor ? MAJOR_DEGREES_HARMONY : MINOR_DEGREES_HARMONY;
+    const modeLabel = isMajor ? 'majeur' : 'mineur';
+
+    let html = '<div class="chord-grid">';
+    for (let i = 0; i < 7; i++) {
+      const notes = getChordNotes(scale, i, isTetrad);
+      const q = qualities[i];
+      let cardClass = 'chord-card';
+      if (q === 'dim' || q === 'm7b5') cardClass += ' dim-chord';
+      else if (q === 'min' || q === 'm7') cardClass += ' minor-chord';
+
+      html += `<div class="${cardClass}">` +
+        `<span class="chord-degree">${degreeLabels[i]}</span>` +
+        `<span class="chord-name">${scale[i]}${CHORD_SUFFIXES[q] || ''}</span>` +
+        `<span class="chord-quality">${QUALITY_LABELS[q]}</span>` +
+        `<span class="chord-notes">${notes.join(' - ')}</span></div>`;
+    }
+    html += '</div>';
+
+    html += '<div class="summary-card">' +
+      `<div><span class="label">Tonalite : </span><span class="value">${root} ${modeLabel}</span></div>` +
+      `<div><span class="label">Gamme : </span><span class="value">${scale.slice(0, 7).join(' — ')}</span></div>` +
+      '</div>';
+
+    harmonyResult.innerHTML = html;
+  }
+
+  // ---- Fretboard ----
+  const fretResult = document.getElementById('fretResult');
+  const TUNING = [4, 9, 2, 7, 11, 4];
+  const STRING_LABELS = ['Mi','La','Re','Sol','Si','Mi'];
+  const FRET_COUNT = 18;
+  const MARKER_FRETS = [3, 5, 7, 9, 15, 17];
+  const DOUBLE_MARKER = [12];
+
+  buildRootGrid(document.getElementById('fretRootGrid'), showFretboard);
+
+  function showFretboard(root) {
+    const scale = getScale(root);
+    const scaleNotes = scale.slice(0, 7);
+    const chromatic = getChromatic(root);
+
+    const scaleIndices = {};
+    for (let i = 0; i < 7; i++) {
+      let idx = chromatic.indexOf(scaleNotes[i]);
+      if (idx === -1) idx = CHROMATIC_SHARPS.indexOf(scaleNotes[i]);
+      if (idx === -1) idx = CHROMATIC_FLATS.indexOf(scaleNotes[i]);
+      if (idx !== -1) scaleIndices[idx] = scaleNotes[i];
+    }
+
+    let rootIdx = chromatic.indexOf(root);
+    if (rootIdx === -1) rootIdx = CHROMATIC_SHARPS.indexOf(root);
+
+    let html = '<div class="fret-wrap"><div class="fretboard">';
+    for (let s = 5; s >= 0; s--) {
+      for (let f = 0; f <= FRET_COUNT; f++) {
+        const chrNote = (TUNING[s] + f) % 12;
+        const noteName = scaleIndices[chrNote] || null;
+        const isOpen = f === 0;
+        const cellClass = 'fret-cell' + (isOpen ? ' open-string' : '');
+        html += `<div class="${cellClass}" data-string="${s}">`;
+        if (isOpen && !noteName) {
+          html += STRING_LABELS[s];
+        } else if (noteName) {
+          let dotClass = 'fret-dot';
+          if (chrNote === rootIdx) dotClass += ' root';
+          else if (isAltered(noteName)) dotClass += ' altered-dot';
+          html += `<span class="${dotClass}">${noteName}</span>`;
+        }
+        html += '</div>';
+      }
+    }
+    html += '</div>';
+
+    html += '<div class="fret-numbers">';
+    for (let f = 0; f <= FRET_COUNT; f++) {
+      let numClass = 'fret-num';
+      if (DOUBLE_MARKER.includes(f)) numClass += ' double-marker';
+      else if (MARKER_FRETS.includes(f)) numClass += ' marker';
+      html += `<div class="${numClass}">${f === 0 ? '' : f}</div>`;
+    }
+    html += '</div></div>';
+
+    html += '<div class="fret-legend">' +
+      '<div class="fret-legend-item"><span class="fret-legend-dot root"></span>Tonique</div>' +
+      '<div class="fret-legend-item"><span class="fret-legend-dot note"></span>Note</div>' +
+      '<div class="fret-legend-item"><span class="fret-legend-dot alt"></span>Alteree</div>' +
+      '</div>';
+
+    fretResult.innerHTML = html;
   }
 
   // ---- Table ----
-  var sortAsc = true;
-  var sortBtn = document.getElementById('sortAlt');
-  var tableBody = document.getElementById('tableBody');
+  let sortAsc = true;
+  const sortBtn = document.getElementById('sortAlt');
+  const tableBody = document.getElementById('tableBody');
 
   function renderTable() {
-    var rows = ROOTS.map(function(root) {
-      return { root: root, scale: getScale(root), info: altInfo(root), sharps: ROOT_SHARPS[root] };
-    });
+    const rows = ROOTS.map(root => ({
+      root, scale: getScale(root), info: altInfo(root), sharps: ROOT_SHARPS[root]
+    }));
 
-    rows.sort(function(a, b) {
-      return sortAsc ? a.sharps - b.sharps : b.sharps - a.sharps;
-    });
+    rows.sort((a, b) => sortAsc ? a.sharps - b.sharps : b.sharps - a.sharps);
 
-    sortBtn.innerHTML = 'Alt. <span class="sort-arrow">' + (sortAsc ? '▲' : '▼') + '</span>';
+    sortBtn.innerHTML = `Alt. <span class="sort-arrow">${sortAsc ? '▲' : '▼'}</span>`;
 
-    var html = '';
-    rows.forEach(function(r) {
-      html += '<tr><td class="root-cell">' + r.root + '</td>';
-      for (var i = 0; i < 7; i++) {
-        var cls = isAltered(r.scale[i]) ? ' class="altered"' : '';
-        html += '<td' + cls + '>' + r.scale[i] + '</td>';
+    let html = '';
+    rows.forEach(r => {
+      html += `<tr><td class="root-cell">${r.root}</td>`;
+      for (let i = 0; i < 7; i++) {
+        const cls = isAltered(r.scale[i]) ? ' class="altered"' : '';
+        html += `<td${cls}>${r.scale[i]}</td>`;
       }
-      var altLabel = r.info.count === 0 ? '—' : (r.info.count + (r.info.type === 'dieses' ? '♯' : '♭'));
-      html += '<td>' + altLabel + '</td></tr>';
+      const altLabel = r.info.count === 0 ? '—' : (r.info.count + (r.info.type === 'dieses' ? '♯' : '♭'));
+      html += `<td>${altLabel}</td></tr>`;
     });
     tableBody.innerHTML = html;
   }
 
-  sortBtn.addEventListener('click', function() {
+  sortBtn.addEventListener('click', () => {
     sortAsc = !sortAsc;
     renderTable();
   });
