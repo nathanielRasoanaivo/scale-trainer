@@ -3,204 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gammes Majeures</title>
+<title>Tonalite</title>
 <meta name="robots" content="noindex, nofollow">
-<!--suppress CssUnusedSymbol -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --text: #1a1a1a;
-  --text-muted: #666;
-  --border: rgba(0,0,0,0.12);
-  --accent: #185FA5;
-  --altered: #E6F1FB;
-  --altered-text: #0C447C;
-  --correct: #EAF3DE;
-  --correct-text: #3B6D11;
-  --wrong: #FCEBEB;
+  --bg: #FDFAF5;
+  --bg-secondary: #F3EDE3;
+  --bg-elevated: #FFFFFF;
+  --text: #2C2420;
+  --text-muted: #8A7C70;
+  --border: rgba(44,37,32,0.10);
+  --border-strong: rgba(44,37,32,0.18);
+  --accent: #B86E2C;
+  --accent-soft: rgba(184,110,44,0.10);
+  --accent-text: #fff;
+  --altered: #FFF5E8;
+  --altered-text: #8B5A1A;
+  --correct: #EAF5DD;
+  --correct-text: #3A6B10;
+  --wrong: #FDEDED;
   --wrong-text: #A32D2D;
+  --shadow-sm: 0 1px 2px rgba(44,37,32,0.06);
+  --shadow-md: 0 4px 12px rgba(44,37,32,0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --font-display: 'Young Serif', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --wood: #ECD5B0;
+  --wood-dark: #DFC8A0;
+  --fret-color: #C0B8A8;
+  --nut-color: #DDD8CC;
+  --string-color: #A09080;
+  --string-shadow: rgba(0,0,0,0.12);
+  --dot-note: var(--accent);
+  --dot-root: #C0392B;
+  --dot-third: #1E7A45;
+  --dot-fifth: #C27020;
+  --dot-seventh: #7040A0;
+  --dot-overlay: #3A8FB7;
+  --dot-both: #2E8B57;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1a1a1a;
-    --bg-secondary: #2a2a2a;
-    --text: #f0f0f0;
-    --text-muted: #999;
-    --border: rgba(255,255,255,0.12);
-    --accent: #378ADD;
-    --altered: #0C2A45;
-    --altered-text: #85B7EB;
-    --correct: #1a2e0a;
-    --correct-text: #97C459;
-    --wrong: #2e0a0a;
-    --wrong-text: #F09595;
+    --bg: #141110;
+    --bg-secondary: #1E1A16;
+    --bg-elevated: #282320;
+    --text: #E2D8C8;
+    --text-muted: #907E6E;
+    --border: rgba(226,216,200,0.07);
+    --border-strong: rgba(226,216,200,0.12);
+    --accent: #D49540;
+    --accent-soft: rgba(212,149,64,0.12);
+    --accent-text: #141110;
+    --altered: #30250E;
+    --altered-text: #DDB44A;
+    --correct: #182A08;
+    --correct-text: #90BE50;
+    --wrong: #2C0E0E;
+    --wrong-text: #F09090;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35);
+
+    --wood: #342A1E;
+    --wood-dark: #2A2118;
+    --fret-color: #504838;
+    --nut-color: #3E3830;
+    --string-color: #6A6050;
+    --string-shadow: rgba(0,0,0,0.4);
+    --dot-root: #E05040;
+    --dot-third: #48B070;
+    --dot-fifth: #E0A040;
+    --dot-seventh: #B080D8;
+    --dot-overlay: #5CB8D6;
+    --dot-both: #4CAF6A;
   }
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
 }
-
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 9999;
+}
 .container {
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px 20px 40px;
 }
 
-h1 {
-  font-size: 1.25rem;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-/* Tabs */
-.tabs {
+/* ========== HEADER ========== */
+.site-header {
   display: flex;
-  border-bottom: 2px solid var(--border);
-  margin-bottom: 20px;
-  gap: 0;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
 }
-.tabs button {
+.site-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.root-selector {
   flex: 1;
-  padding: 10px 4px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  color: var(--text-muted);
+  position: relative;
+}
+.root-selector select {
+  width: 100%;
+  padding: 10px 38px 10px 14px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7C70' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
 }
+.root-selector select:hover { border-color: var(--accent); }
+.root-selector select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ========== TABS ========== */
+.tabs {
+  display: flex;
+  border-bottom: 1.5px solid var(--border-strong);
+  margin-bottom: 24px;
+}
+.tabs button {
+  flex: 1;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+.tabs button:hover { color: var(--text); }
 .tabs button.active {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
-
 .tab-content { display: none; }
-.tab-content.active { display: block; }
+.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-/* Subtabs */
+/* ========== SUBTABS ========== */
 .subtabs {
   display: flex;
-  gap: 0;
-  margin-bottom: 16px;
-  border-radius: 8px;
+  margin-bottom: 20px;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  border: 2px solid var(--border);
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-sm);
 }
 .subtabs button {
   flex: 1;
-  padding: 8px 8px;
+  padding: 9px 6px;
   border: none;
-  background: var(--bg);
+  background: transparent;
   color: var(--text-muted);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: all var(--transition);
 }
-.subtabs button.active {
-  background: var(--accent);
-  color: #fff;
-}
+.subtabs button:hover { color: var(--text); background: var(--accent-soft); }
+.subtabs button.active { background: var(--accent); color: var(--accent-text); }
 .sub-content { display: none; }
-.sub-content.active { display: block; }
+.sub-content.active { display: block; animation: fadeIn 0.25s ease; }
 
-/* Root grid */
-.root-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 20px;
+/* ========== MODE TOGGLE ========== */
+.mode-toggle {
+  display: flex;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-secondary);
 }
-.root-grid button {
-  padding: 10px 4px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
+.mode-toggle button {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: all var(--transition);
 }
-.root-grid button.active {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
+.mode-toggle button:hover { color: var(--text); background: var(--accent-soft); }
+.mode-toggle button.active { background: var(--accent); color: var(--accent-text); }
+.mode-toggle + .mode-toggle { margin-top: 8px; }
 
-/* Scale display */
+/* ========== SCALE DISPLAY ========== */
 .scale-display {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 .note-pill {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 48px;
-  padding: 10px 8px 8px;
-  border-radius: 10px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  min-width: 52px;
+  padding: 12px 10px 10px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  animation: pillIn 0.3s ease both;
 }
+.note-pill:nth-child(1) { animation-delay: 0s; }
+.note-pill:nth-child(2) { animation-delay: 0.03s; }
+.note-pill:nth-child(3) { animation-delay: 0.06s; }
+.note-pill:nth-child(4) { animation-delay: 0.09s; }
+.note-pill:nth-child(5) { animation-delay: 0.12s; }
+.note-pill:nth-child(6) { animation-delay: 0.15s; }
+.note-pill:nth-child(7) { animation-delay: 0.18s; }
+.note-pill:nth-child(8) { animation-delay: 0.21s; }
 .note-pill.altered {
   background: var(--altered);
   border-color: var(--altered-text);
 }
 .note-pill .note-name {
-  font-size: 17px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
 }
-.note-pill.altered .note-name {
-  color: var(--altered-text);
-}
+.note-pill.altered .note-name { color: var(--altered-text); }
 .note-pill .degree {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Summary card */
-.summary-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-size: 14px;
-  line-height: 1.7;
-}
-.summary-card .label {
-  color: var(--text-muted);
-  font-size: 13px;
-}
-.summary-card .value {
+  font-size: 11px;
   font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 4px;
+  letter-spacing: 0.04em;
 }
 
-/* Quiz filter */
-.quiz-filter {
-  margin-bottom: 16px;
+/* ========== SUMMARY CARD ========== */
+.summary-card {
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.8;
+  box-shadow: var(--shadow-sm);
 }
+.summary-card .label { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+.summary-card .value { font-weight: 700; }
+
+/* ========== QUIZ ========== */
+.quiz-filter { margin-bottom: 20px; }
 .quiz-filter-label {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--text-muted);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 .quiz-filter-options {
   display: flex;
@@ -208,33 +312,33 @@ h1 {
   gap: 6px;
 }
 .quiz-filter-options button {
-  padding: 6px 10px;
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
+  padding: 6px 12px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
   color: var(--text);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
 }
+.quiz-filter-options button:hover { border-color: var(--accent); }
 .quiz-filter-options button.active {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-text);
 }
-
-/* Quiz */
 .quiz-prompt {
   text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  line-height: 1.4;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
-.quiz-prompt .highlight {
-  color: var(--accent);
-}
+.quiz-prompt .highlight { color: var(--accent); }
 .quiz-choices {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -242,61 +346,70 @@ h1 {
   margin-bottom: 16px;
 }
 .quiz-choices button {
-  padding: 14px 8px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg);
+  padding: 16px 8px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
   color: var(--text);
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.quiz-choices button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
 }
 .quiz-choices button.correct {
   background: var(--correct);
   border-color: var(--correct-text);
   color: var(--correct-text);
+  box-shadow: 0 0 0 3px rgba(58,107,16,0.15);
 }
 .quiz-choices button.wrong {
   background: var(--wrong);
   border-color: var(--wrong-text);
   color: var(--wrong-text);
 }
-.quiz-choices button:disabled {
-  cursor: default;
-  opacity: 0.7;
-}
+.quiz-choices button:disabled { cursor: default; opacity: 0.6; transform: none; }
 .quiz-choices button.correct { opacity: 1; }
-
 .quiz-score {
   text-align: center;
   font-size: 14px;
+  font-weight: 600;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .quiz-next {
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-text);
+  font-family: var(--font-body);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(184,110,44,0.25);
 }
-.quiz-next:disabled {
-  opacity: 0.4;
-  cursor: default;
+.quiz-next:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(184,110,44,0.35);
 }
+.quiz-next:disabled { opacity: 0.35; cursor: default; transform: none; }
 
-/* Table */
+/* ========== TABLE ========== */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 0 -16px;
-  padding: 0 16px;
+  margin: 0 -20px;
+  padding: 0 20px;
 }
 table {
   width: 100%;
@@ -305,102 +418,77 @@ table {
   font-size: 14px;
 }
 th, td {
-  padding: 8px 6px;
+  padding: 10px 6px;
   text-align: center;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 th {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   user-select: none;
   position: sticky;
   top: 0;
   background: var(--bg);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 th.sortable:hover { color: var(--accent); }
 td.altered {
   background: var(--altered);
   color: var(--altered-text);
-  font-weight: 600;
-}
-td.root-cell {
   font-weight: 700;
 }
-.sort-arrow { font-size: 11px; margin-left: 2px; }
+td.root-cell {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+}
+.sort-arrow { font-size: 10px; margin-left: 2px; }
 
-/* Mode toggle */
-.mode-toggle {
-  display: flex;
-  gap: 0;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid var(--border);
-}
-.mode-toggle button {
-  flex: 1;
-  padding: 10px 8px;
-  border: none;
-  background: var(--bg);
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-.mode-toggle button.active {
-  background: var(--accent);
-  color: #fff;
-}
-
-.mode-toggle + .mode-toggle {
-  margin-top: 8px;
-}
-
-/* Chord cards */
+/* ========== CHORD CARDS ========== */
 .chord-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 .chord-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 6px 10px;
-  border-radius: 10px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  padding: 14px 6px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
 }
+.chord-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .chord-card .chord-name {
+  font-family: var(--font-display);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 400;
 }
 .chord-card .chord-quality {
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--text-muted);
   margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .chord-card .chord-degree {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
   margin-top: 4px;
 }
-.chord-card.minor-chord {
-  border-color: var(--border);
-}
-.chord-card.dim-chord {
-  background: var(--altered);
-  border-color: var(--altered-text);
-}
-.chord-card.dim-chord .chord-name {
-  color: var(--altered-text);
-}
+.chord-card.minor-chord { border-color: var(--border-strong); }
+.chord-card.dim-chord { background: var(--altered); border-color: var(--altered-text); }
+.chord-card.dim-chord .chord-name { color: var(--altered-text); }
 .chord-card .chord-notes {
   font-size: 11px;
   color: var(--text-muted);
@@ -409,70 +497,129 @@ td.root-cell {
   line-height: 1.3;
 }
 
-/* Fretboard */
+/* ========== QUALITIES ========== */
+.quality-degree { margin-bottom: 18px; }
+.quality-degree-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.quality-degree-num {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--accent);
+  min-width: 36px;
+}
+.quality-degree-note {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+}
+.quality-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.quality-tag {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+.quality-tag.common {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+.quality-legend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.quality-legend-swatch {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.quality-legend-swatch.common { background: var(--accent); }
+.quality-legend-swatch.other { background: var(--bg-elevated); border: 1.5px solid var(--border-strong); }
+
+/* ========== FRET RANGE SELECTOR ========== */
+.fret-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.fret-range select {
+  padding: 6px 28px 6px 10px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7C70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  min-width: 52px;
+}
+.fret-range select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ========== FRETBOARD ========== */
 .fret-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 0 -16px;
+  margin: 0 -20px;
   padding: 0 0 12px 0;
 }
 .fretboard {
   position: relative;
   display: grid;
   grid-template-columns: 40px repeat(18, 52px);
-  grid-template-rows: repeat(6, 36px);
+  grid-template-rows: repeat(6, 38px);
   min-width: fit-content;
-  margin: 0 16px;
-  border-radius: 6px;
+  margin: 0 20px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
-/* Wood background */
 .fret-cell {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border-right: 2px solid var(--fret-color);
-  border-bottom: none;
   background: var(--wood);
 }
-:root {
-  --wood: #F5E6C8;
-  --wood-dark: #E8D4A8;
-  --fret-color: #C0C0C0;
-  --nut-color: #F0F0E0;
-  --string-color: #A0A0A0;
-  --string-shadow: rgba(0,0,0,0.15);
-  --dot-note: var(--accent);
-  --dot-root: #D4442A;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --wood: #3D2E1E;
-    --wood-dark: #2E2218;
-    --fret-color: #6A6A6A;
-    --nut-color: #5A5A50;
-    --string-color: #888;
-    --string-shadow: rgba(0,0,0,0.4);
-    --dot-root: #E8654E;
-  }
-}
-/* Open string labels (fret 0 column) */
 .fret-cell.open-string {
   background: var(--bg-secondary);
-  border-right: 4px solid var(--nut-color);
+  border-right: 5px solid var(--nut-color);
   font-size: 13px;
   font-weight: 700;
   color: var(--text-muted);
 }
-/* Alternating fret shade */
-.fret-cell:nth-child(even) {
-  background: var(--wood-dark);
-}
-.fret-cell.open-string:nth-child(even) {
-  background: var(--bg-secondary);
-}
-/* String line */
+.fret-cell:nth-child(even) { background: var(--wood-dark); }
+.fret-cell.open-string:nth-child(even) { background: var(--bg-secondary); }
 .fret-cell::after {
   content: '';
   position: absolute;
@@ -480,12 +627,11 @@ td.root-cell {
   top: 50%;
   height: var(--string-w, 1px);
   margin-top: calc(var(--string-w, 1px) / -2);
-  background: var(--string-color);
-  box-shadow: 0 1px 1px var(--string-shadow);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), var(--string-color), rgba(0,0,0,0.1));
+  box-shadow: 0 1px 2px var(--string-shadow);
   z-index: 1;
   pointer-events: none;
 }
-/* String thickness per row (low E = thick, high E = thin) */
 .fret-cell[data-string="0"] { --string-w: 4px; }
 .fret-cell[data-string="1"] { --string-w: 3px; }
 .fret-cell[data-string="2"] { --string-w: 3px; }
@@ -493,7 +639,6 @@ td.root-cell {
 .fret-cell[data-string="4"] { --string-w: 2px; }
 .fret-cell[data-string="5"] { --string-w: 1px; }
 
-/* Note dot */
 .fret-dot {
   position: relative;
   z-index: 2;
@@ -502,43 +647,134 @@ td.root-cell {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   color: #fff;
   background: var(--dot-note);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
   line-height: 1;
 }
 .fret-dot.root {
   background: var(--dot-root);
   width: 30px; height: 30px;
-  font-size: 12px;
+  font-size: 11px;
 }
-.fret-dot.altered-dot {
-  background: var(--altered-text);
+.fret-dot.altered-dot { background: var(--altered-text); }
+.fret-dot.chord-third { background: var(--dot-third); }
+.fret-dot.chord-fifth { background: var(--dot-fifth); }
+.fret-dot.chord-seventh { background: var(--dot-seventh); }
+.fret-dot.overlay-only { background: var(--dot-overlay); }
+.fret-dot.both-scales { background: var(--dot-both); }
+.fret-legend-dot.overlay { background: var(--dot-overlay); }
+.fret-legend-dot.both { background: var(--dot-both); }
+
+/* ========== OVERLAY CONTROLS ========== */
+.scale-config {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.scale-config select {
+  flex: 1;
+  padding: 8px 32px 8px 12px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7C70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+.scale-config select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.scale-config .config-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.overlay-section {
+  margin-bottom: 14px;
+}
+.overlay-btn {
+  padding: 7px 14px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.overlay-btn:hover { border-color: var(--accent); color: var(--accent); }
+.overlay-btn.active {
+  border-style: solid;
+  border-color: var(--dot-overlay);
+  color: var(--dot-overlay);
+  background: var(--accent-soft);
+}
+.overlay-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.overlay-controls select {
+  flex: 1;
+  padding: 7px 28px 7px 10px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7C70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  box-shadow: var(--shadow-sm);
+}
+.overlay-controls select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
-/* Fret numbers */
 .fret-numbers {
   display: grid;
   grid-template-columns: 40px repeat(18, 52px);
   min-width: fit-content;
-  margin: 0 16px;
+  margin: 0 20px;
 }
 .fret-num {
   text-align: center;
   font-size: 11px;
   color: var(--text-muted);
-  padding: 4px 0 0;
-  font-weight: 600;
+  padding: 6px 0 0;
+  font-weight: 700;
 }
-/* Fret markers (dots on frets 3,5,7,9,12,15) */
 .fret-num.marker::before {
   content: '';
   display: block;
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--border);
+  background: var(--border-strong);
   margin: 0 auto 2px;
 }
 .fret-num.double-marker::before {
@@ -546,16 +782,14 @@ td.root-cell {
   display: block;
   width: 16px; height: 6px;
   border-radius: 3px;
-  background: var(--border);
+  background: var(--border-strong);
   margin: 0 auto 2px;
 }
-
-/* Legend */
 .fret-legend {
   display: flex;
-  gap: 16px;
+  gap: 18px;
   justify-content: center;
-  margin-top: 14px;
+  margin-top: 16px;
   flex-wrap: wrap;
 }
 .fret-legend-item {
@@ -563,6 +797,7 @@ td.root-cell {
   align-items: center;
   gap: 6px;
   font-size: 12px;
+  font-weight: 600;
   color: var(--text-muted);
 }
 .fret-legend-dot {
@@ -573,67 +808,141 @@ td.root-cell {
 .fret-legend-dot.root { background: var(--dot-root); }
 .fret-legend-dot.note { background: var(--dot-note); }
 .fret-legend-dot.alt { background: var(--altered-text); }
+.fret-legend-dot.third { background: var(--dot-third); }
+.fret-legend-dot.fifth { background: var(--dot-fifth); }
+.fret-legend-dot.seventh { background: var(--dot-seventh); }
+
+/* ========== CHORD DEGREE PICKER ========== */
+.chord-degree-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.chord-degree-btn {
+  flex: 1 1 calc(25% - 6px);
+  min-width: 72px;
+  padding: 10px 4px 8px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition);
+  line-height: 1.3;
+  box-shadow: var(--shadow-sm);
+}
+.chord-degree-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.chord-degree-btn .deg-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.chord-degree-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  box-shadow: 0 2px 8px rgba(184,110,44,0.3);
+}
+.chord-degree-btn.active .deg-label { color: rgba(255,255,255,0.7); }
+
+.chord-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  font-size: 14px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+.chord-info .ci-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+}
+.chord-info .ci-quality {
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.chord-info .ci-notes { font-weight: 700; }
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pillIn {
+  from { opacity: 0; transform: scale(0.85) translateY(4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Gammes Majeures</h1>
+
+  <header class="site-header">
+    <h1>Tonalite</h1>
+    <div class="root-selector">
+      <select id="rootSelect">
+        <option value="" disabled selected>Tonalite...</option>
+      </select>
+    </div>
+  </header>
 
   <nav class="tabs">
-    <button class="active" data-tab="learn">Apprendre</button>
-    <button data-tab="quiz">Quiz</button>
-    <button data-tab="ref">Reference</button>
+    <button class="active" data-tab="theory">Theorie</button>
+    <button data-tab="tools">Outils</button>
   </nav>
 
-  <!-- Apprendre -->
-  <div id="learn" class="tab-content active">
+  <!-- Theorie -->
+  <div id="theory" class="tab-content active">
     <div class="subtabs">
-      <button class="active" data-sub="learn-scale">Gamme</button>
-      <button data-sub="learn-fretboard">Manche</button>
+      <button class="active" data-sub="theory-scales">Gammes</button>
+      <button data-sub="theory-harmony">Harmonisation</button>
+      <button data-sub="theory-qualities">Enrichissements</button>
     </div>
-    <div id="learn-scale" class="sub-content active">
-      <div class="root-grid" id="rootGrid"></div>
-      <div id="scaleResult"></div>
-    </div>
-    <div id="learn-fretboard" class="sub-content">
-      <div class="root-grid" id="fretRootGrid"></div>
-      <div id="fretResult"></div>
-    </div>
-  </div>
-
-  <!-- Quiz -->
-  <div id="quiz" class="tab-content">
-    <div class="quiz-filter">
-      <label class="quiz-filter-label">Tonalite :</label>
-      <div class="quiz-filter-options" id="quizFilter"></div>
-    </div>
-    <div class="quiz-score" id="quizScore">Score : 0 / 0</div>
-    <div class="quiz-prompt" id="quizPrompt"></div>
-    <div class="quiz-choices" id="quizChoices"></div>
-    <button class="quiz-next" id="quizNext">Nouvelle question</button>
-  </div>
-
-  <!-- Reference -->
-  <div id="ref" class="tab-content">
-    <div class="subtabs">
-      <button class="active" data-sub="ref-table">Tableau</button>
-      <button data-sub="ref-harmony">Harmonisation</button>
-    </div>
-    <div id="ref-table" class="sub-content active">
+    <div id="theory-scales" class="sub-content active">
       <div class="table-wrap">
         <table id="scaleTable">
           <thead>
             <tr>
               <th>Tonique</th>
               <th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th><th>VII</th>
-              <th class="sortable" id="sortAlt">Alt. <span class="sort-arrow">▲</span></th>
+              <th class="sortable" id="sortAlt">Alt. <span class="sort-arrow">&#9650;</span></th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
         </table>
       </div>
     </div>
-    <div id="ref-harmony" class="sub-content">
+    <div id="theory-harmony" class="sub-content">
       <div class="mode-toggle" id="modeToggle">
         <button class="active" data-mode="major">Majeur</button>
         <button data-mode="minor">Mineur</button>
@@ -642,8 +951,68 @@ td.root-cell {
         <button class="active" data-voicing="triad">Triade</button>
         <button data-voicing="tetrad">Tetrade</button>
       </div>
-      <div class="root-grid" id="harmonyRootGrid"></div>
       <div id="harmonyResult"></div>
+    </div>
+    <div id="theory-qualities" class="sub-content">
+      <div class="mode-toggle" id="qualitiesMode">
+        <button class="active" data-mode="major">Majeur</button>
+        <button data-mode="minor">Mineur</button>
+      </div>
+      <div id="qualitiesResult"></div>
+    </div>
+  </div>
+
+  <!-- Outils -->
+  <div id="tools" class="tab-content">
+    <div class="subtabs">
+      <button class="active" data-sub="tools-scale">Gamme</button>
+      <button data-sub="tools-chords">Accords</button>
+      <button data-sub="tools-quiz">Quiz</button>
+    </div>
+    <div class="fret-range" id="fretRange">
+      <span>Frettes</span>
+      <select id="fretFrom"></select>
+      <span>a</span>
+      <select id="fretTo"></select>
+    </div>
+    <div id="tools-scale" class="sub-content active">
+      <div class="scale-config">
+        <span class="config-label">Type</span>
+        <select id="scaleTypeSelect"></select>
+      </div>
+      <div id="scaleResult"></div>
+      <div class="overlay-section">
+        <button class="overlay-btn" id="overlayBtn">+ Comparer</button>
+        <div class="overlay-controls" id="overlayControls" style="display:none">
+          <select id="overlayRoot"></select>
+          <select id="overlayType"></select>
+        </div>
+        <div id="overlayScaleResult"></div>
+      </div>
+      <div id="scaleFretResult"></div>
+    </div>
+    <div id="tools-chords" class="sub-content">
+      <div class="mode-toggle" id="chordVoicingToggle">
+        <button class="active" data-voicing="triad">Triade</button>
+        <button data-voicing="tetrad">Tetrade</button>
+      </div>
+      <div class="mode-toggle" id="chordDisplayToggle">
+        <button class="active" data-display="notes">Notes</button>
+        <button data-display="intervals">Intervalles</button>
+      </div>
+      <div id="chordDegreePicker" class="chord-degree-picker"></div>
+      <div id="chordInfo" class="chord-info" style="display:none;"></div>
+      <div id="chordFretResult"></div>
+    </div>
+    <div id="tools-quiz" class="sub-content">
+      <div class="quiz-filter">
+        <label class="quiz-filter-label">Tonalite :</label>
+        <div class="quiz-filter-options" id="quizFilter"></div>
+      </div>
+      <div class="quiz-score" id="quizScore">Score : 0 / 0</div>
+      <div class="quiz-prompt" id="quizPrompt"></div>
+      <div class="quiz-choices" id="quizChoices"></div>
+      <button class="quiz-next" id="quizNext">Nouvelle question</button>
     </div>
   </div>
 </div>
@@ -688,6 +1057,27 @@ td.root-cell {
     'Maj7': 'Maj7', 'm7': 'm7', '7': '7', 'm7b5': 'm7b5'
   };
 
+  const TUNING = [4, 9, 2, 7, 11, 4];
+  const STRING_LABELS = ['Mi','La','Re','Sol','Si','Mi'];
+  const FRET_COUNT = 18;
+  const MARKER_FRETS = [3, 5, 7, 9, 15, 17];
+  const DOUBLE_MARKER = [12];
+
+  const SCALE_TYPES = [
+    { name: 'Majeure',        intervals: [0,2,4,5,7,9,11],  degrees: ['I','II','III','IV','V','VI','VII'] },
+    { name: 'Min. naturelle', intervals: [0,2,3,5,7,8,10],  degrees: ['I','II','bIII','IV','V','bVI','bVII'] },
+    { name: 'Dorien',         intervals: [0,2,3,5,7,9,10],  degrees: ['I','II','bIII','IV','V','VI','bVII'] },
+    { name: 'Phrygien',       intervals: [0,1,3,5,7,8,10],  degrees: ['I','bII','bIII','IV','V','bVI','bVII'] },
+    { name: 'Lydien',         intervals: [0,2,4,6,7,9,11],  degrees: ['I','II','III','#IV','V','VI','VII'] },
+    { name: 'Mixolydien',     intervals: [0,2,4,5,7,9,10],  degrees: ['I','II','III','IV','V','VI','bVII'] },
+    { name: 'Locrien',        intervals: [0,1,3,5,6,8,10],  degrees: ['I','bII','bIII','IV','bV','bVI','bVII'] },
+    { name: 'Min. harmonique',intervals: [0,2,3,5,7,8,11],  degrees: ['I','II','bIII','IV','V','bVI','VII'] },
+    { name: 'Min. melodique', intervals: [0,2,3,5,7,9,11],  degrees: ['I','II','bIII','IV','V','VI','VII'] },
+    { name: 'Penta. maj.',    intervals: [0,2,4,7,9],        degrees: ['1','2','3','5','6'] },
+    { name: 'Penta. min.',    intervals: [0,3,5,7,10],       degrees: ['1','b3','4','5','b7'] },
+    { name: 'Blues',           intervals: [0,3,5,6,7,10],     degrees: ['1','b3','4','b5','5','b7'] },
+  ];
+
   // ---- Music theory helpers ----
 
   function getChromatic(root) {
@@ -716,17 +1106,13 @@ td.root-cell {
       chromatic = CHROMATIC_SHARPS;
       rootIndex = chromatic.indexOf(root);
     }
-
     const rootNaturalIdx = NATURAL_NOTES.indexOf(getNaturalBase(root));
     const notes = [];
-
     for (let i = 0; i < 8; i++) {
       if (i === 7) { notes.push(notes[0]); continue; }
-
       const chrIdx = (rootIndex + intervals[i] % 12) % 12;
       let note = chromatic[chrIdx];
       const expectedNatural = NATURAL_NOTES[(rootNaturalIdx + i) % 7];
-
       if (getNaturalBase(note) !== expectedNatural) {
         note = respell(chrIdx, expectedNatural);
       }
@@ -735,13 +1121,9 @@ td.root-cell {
     return notes;
   }
 
-  function getScale(root) {
-    return buildScale(root, MAJOR_INTERVALS);
-  }
+  function getScale(root) { return buildScale(root, MAJOR_INTERVALS); }
 
-  function isAltered(note) {
-    return note.includes('#') || note.includes('b');
-  }
+  function isAltered(note) { return note.includes('#') || note.includes('b'); }
 
   function altInfo(root) {
     const n = ROOT_SHARPS[root];
@@ -750,12 +1132,25 @@ td.root-cell {
     return { count: -n, type: 'bemols', label: (-n) + ' bemol' + (-n > 1 ? 's' : '') };
   }
 
+  function getScaleNoteNames(root, intervals) {
+    if (intervals.length === 7) {
+      return buildScale(root, [...intervals, 12]).slice(0, 7);
+    }
+    const chromatic = getChromatic(root);
+    let rootIdx = chromatic.indexOf(root);
+    if (rootIdx === -1) rootIdx = CHROMATIC_SHARPS.indexOf(root);
+    return intervals.map(i => chromatic[(rootIdx + i) % 12]);
+  }
+
+  function getScaleChromatics(root, intervals) {
+    const chromatic = getChromatic(root);
+    let rootIdx = chromatic.indexOf(root);
+    if (rootIdx === -1) rootIdx = CHROMATIC_SHARPS.indexOf(root);
+    return new Set(intervals.map(i => (rootIdx + i) % 12));
+  }
+
   function getChordNotes(scale, degreeIdx, isTetrad) {
-    const notes = [
-      scale[degreeIdx],
-      scale[(degreeIdx + 2) % 7],
-      scale[(degreeIdx + 4) % 7]
-    ];
+    const notes = [scale[degreeIdx], scale[(degreeIdx + 2) % 7], scale[(degreeIdx + 4) % 7]];
     if (isTetrad) notes.push(scale[(degreeIdx + 6) % 7]);
     return notes;
   }
@@ -769,7 +1164,6 @@ td.root-cell {
       tabContents.forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
-      if (btn.dataset.tab === 'quiz' && quizTotal === 0) newQuestion();
     });
   });
 
@@ -782,67 +1176,301 @@ td.root-cell {
         parent.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById(btn.dataset.sub).classList.add('active');
+        if (btn.dataset.sub === 'tools-quiz' && quizTotal === 0) newQuestion();
+        if (btn.dataset.sub === 'tools-quiz') fretRangeEl.style.display = 'none';
+        else if (parent.id === 'tools') fretRangeEl.style.display = '';
       });
     });
   });
 
-  // ---- Utility: build root grid ----
-  function buildRootGrid(container, onClick) {
-    ROOTS.forEach(root => {
-      const btn = document.createElement('button');
-      btn.textContent = root;
+  // ---- Root selector (dropdown) ----
+  let selectedRoot = null;
+  const rootSelect = document.getElementById('rootSelect');
+
+  const sharpRoots = ROOTS.filter(r => ROOT_SHARPS[r] >= 0);
+  const flatRoots = ROOTS.filter(r => ROOT_SHARPS[r] < 0);
+
+  const grpSharps = document.createElement('optgroup');
+  grpSharps.label = 'Dieses';
+  sharpRoots.forEach(root => {
+    const opt = document.createElement('option');
+    const info = altInfo(root);
+    opt.value = root;
+    opt.textContent = root + (info.count > 0 ? ' (' + info.count + '\u266F)' : '');
+    grpSharps.appendChild(opt);
+  });
+
+  const grpFlats = document.createElement('optgroup');
+  grpFlats.label = 'Bemols';
+  flatRoots.forEach(root => {
+    const opt = document.createElement('option');
+    const info = altInfo(root);
+    opt.value = root;
+    opt.textContent = root + ' (' + info.count + '\u266D)';
+    grpFlats.appendChild(opt);
+  });
+
+  rootSelect.appendChild(grpSharps);
+  rootSelect.appendChild(grpFlats);
+
+  function onRootChange() {
+    if (!selectedRoot) return;
+    showScale(selectedRoot);
+    showChordFretboard(selectedRoot);
+    showHarmony(selectedRoot);
+    showQualities();
+    renderTable();
+  }
+
+  rootSelect.addEventListener('change', () => {
+    selectedRoot = rootSelect.value;
+    onRootChange();
+  });
+
+  // ---- Utility ----
+  function setupToggle(container, onSelect) {
+    container.querySelectorAll('button').forEach(btn => {
       btn.addEventListener('click', () => {
         container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        onClick(root);
+        onSelect(btn);
       });
-      container.appendChild(btn);
     });
   }
 
-  // ---- Learn ----
+  // ---- Learn: Scale ----
   const scaleResult = document.getElementById('scaleResult');
-  buildRootGrid(document.getElementById('rootGrid'), showScale);
+  let scaleTypeIdx = 0;
+  let overlayEnabled = false, overlayRootVal = null, overlayTypeIdx = 10;
+
+  // Populate scale type select
+  const scaleTypeSelect = document.getElementById('scaleTypeSelect');
+  SCALE_TYPES.forEach((t, i) => {
+    const opt = document.createElement('option');
+    opt.value = i; opt.textContent = t.name;
+    scaleTypeSelect.appendChild(opt);
+  });
+  scaleTypeSelect.addEventListener('change', () => {
+    scaleTypeIdx = parseInt(scaleTypeSelect.value);
+    if (selectedRoot) showScale(selectedRoot);
+  });
+
+  // Overlay toggle + controls
+  const overlayBtn = document.getElementById('overlayBtn');
+  const overlayControlsEl = document.getElementById('overlayControls');
+  const overlayRootEl = document.getElementById('overlayRoot');
+  const overlayTypeEl = document.getElementById('overlayType');
+
+  overlayBtn.addEventListener('click', () => {
+    overlayEnabled = !overlayEnabled;
+    overlayBtn.classList.toggle('active', overlayEnabled);
+    overlayBtn.textContent = overlayEnabled ? '\u2212 Comparer' : '+ Comparer';
+    overlayControlsEl.style.display = overlayEnabled ? '' : 'none';
+    if (selectedRoot) showScaleFretboard(selectedRoot);
+  });
+
+  // Populate overlay root
+  const oPlaceholder = document.createElement('option');
+  oPlaceholder.value = ''; oPlaceholder.textContent = 'Tonalite...'; oPlaceholder.disabled = true; oPlaceholder.selected = true;
+  overlayRootEl.appendChild(oPlaceholder);
+  const oGrpS = document.createElement('optgroup'); oGrpS.label = 'Dieses';
+  const oGrpF = document.createElement('optgroup'); oGrpF.label = 'Bemols';
+  ROOTS.forEach(r => {
+    const opt = document.createElement('option');
+    const info = altInfo(r);
+    opt.value = r;
+    opt.textContent = info.count === 0 ? r : r + ' (' + info.count + (info.type === 'dieses' ? '\u266F' : '\u266D') + ')';
+    if (ROOT_SHARPS[r] >= 0) oGrpS.appendChild(opt); else oGrpF.appendChild(opt);
+  });
+  overlayRootEl.appendChild(oGrpS);
+  overlayRootEl.appendChild(oGrpF);
+  overlayRootEl.addEventListener('change', () => {
+    overlayRootVal = overlayRootEl.value;
+    if (selectedRoot) showScaleFretboard(selectedRoot);
+  });
+
+  // Populate overlay type
+  SCALE_TYPES.forEach((t, i) => {
+    const opt = document.createElement('option');
+    opt.value = i; opt.textContent = t.name;
+    if (i === overlayTypeIdx) opt.selected = true;
+    overlayTypeEl.appendChild(opt);
+  });
+  overlayTypeEl.addEventListener('change', () => {
+    overlayTypeIdx = parseInt(overlayTypeEl.value);
+    if (selectedRoot) showScaleFretboard(selectedRoot);
+  });
 
   function showScale(root) {
-    const notes = getScale(root);
-    const info = altInfo(root);
-    const alteredNotes = notes.slice(0, 7).filter(isAltered);
+    const type = SCALE_TYPES[scaleTypeIdx];
+    const notes = getScaleNoteNames(root, type.intervals);
+    const degrees = type.degrees;
 
     let html = '<div class="scale-display">';
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < notes.length; i++) {
       const alt = isAltered(notes[i]) ? ' altered' : '';
-      html += `<div class="note-pill${alt}">` +
-        `<span class="note-name">${notes[i]}</span>` +
-        `<span class="degree">${DEGREES[i]}</span></div>`;
+      html += `<div class="note-pill${alt}"><span class="note-name">${notes[i]}</span><span class="degree">${degrees[i]}</span></div>`;
     }
+    // Octave pill
+    const alt0 = isAltered(notes[0]) ? ' altered' : '';
+    html += `<div class="note-pill${alt0}"><span class="note-name">${notes[0]}</span><span class="degree">${degrees[0]}</span></div>`;
     html += '</div>';
 
-    html += '<div class="summary-card">' +
-      `<div><span class="label">Alterations : </span><span class="value">${info.label}</span></div>`;
+    html += '<div class="summary-card">';
+    html += `<div><span class="label">Gamme : </span><span class="value">${root} ${type.name}</span></div>`;
+    html += `<div><span class="label">Notes : </span><span class="value">${notes.join(' \u2014 ')}</span></div>`;
+    const alteredNotes = notes.filter(isAltered);
     if (alteredNotes.length > 0) {
-      html += `<div><span class="label">Notes alterees : </span><span class="value">${alteredNotes.join(', ')}</span></div>`;
+      html += `<div><span class="label">Alterees : </span><span class="value">${alteredNotes.join(', ')}</span></div>`;
     }
-    html += `<div><span class="label">Gamme : </span><span class="value">${notes.slice(0, 7).join(' — ')}</span></div>`;
     html += '</div>';
 
     scaleResult.innerHTML = html;
+    showScaleFretboard(root);
+  }
+
+  // ---- Shared fret range ----
+  let fretFrom = 0, fretTo = 12;
+  const fretRangeEl = document.getElementById('fretRange');
+  const fretFromEl = document.getElementById('fretFrom');
+  const fretToEl = document.getElementById('fretTo');
+  const scaleFretResult = document.getElementById('scaleFretResult');
+
+  for (let f = 0; f <= FRET_COUNT; f++) {
+    const o1 = document.createElement('option');
+    o1.value = f; o1.textContent = f; if (f === fretFrom) o1.selected = true;
+    fretFromEl.appendChild(o1);
+    const o2 = document.createElement('option');
+    o2.value = f; o2.textContent = f; if (f === fretTo) o2.selected = true;
+    fretToEl.appendChild(o2);
+  }
+
+  function onFretRangeChange() {
+    if (!selectedRoot) return;
+    showScaleFretboard(selectedRoot);
+    showChordFretboard(selectedRoot);
+  }
+
+  fretFromEl.addEventListener('change', () => {
+    fretFrom = parseInt(fretFromEl.value);
+    if (fretFrom > fretTo) { fretTo = fretFrom; fretToEl.value = fretTo; }
+    onFretRangeChange();
+  });
+  fretToEl.addEventListener('change', () => {
+    fretTo = parseInt(fretToEl.value);
+    if (fretTo < fretFrom) { fretFrom = fretTo; fretFromEl.value = fretFrom; }
+    onFretRangeChange();
+  });
+
+  // Shared fretboard HTML builder
+  function buildFretHtml(noteMap, dotClassFn, legendItems) {
+    const span = fretTo - fretFrom;
+    const colW = span <= 5 ? 72 : span <= 9 ? 60 : 52;
+    const cols = fretFrom === 0 ? fretTo : span + 1;
+    const gridStyle = `style="grid-template-columns:40px repeat(${cols},${colW}px)"`;
+
+    let html = `<div class="fret-wrap"><div class="fretboard" ${gridStyle}>`;
+    for (let s = 5; s >= 0; s--) {
+      // Label column
+      const openChr = (TUNING[s] + fretFrom) % 12;
+      html += `<div class="fret-cell open-string" data-string="${s}">`;
+      if (fretFrom === 0 && noteMap[openChr]) {
+        html += `<span class="${dotClassFn(openChr)}">${noteMap[openChr]}</span>`;
+      } else {
+        html += STRING_LABELS[s];
+      }
+      html += '</div>';
+      // Fret cells
+      const start = fretFrom === 0 ? 1 : fretFrom;
+      for (let f = start; f <= fretTo; f++) {
+        const chr = (TUNING[s] + f) % 12;
+        html += `<div class="fret-cell" data-string="${s}">`;
+        if (noteMap[chr]) html += `<span class="${dotClassFn(chr)}">${noteMap[chr]}</span>`;
+        html += '</div>';
+      }
+    }
+    html += `</div><div class="fret-numbers" ${gridStyle}><div class="fret-num"></div>`;
+    const start = fretFrom === 0 ? 1 : fretFrom;
+    for (let f = start; f <= fretTo; f++) {
+      let cls = 'fret-num';
+      if (DOUBLE_MARKER.includes(f)) cls += ' double-marker';
+      else if (MARKER_FRETS.includes(f)) cls += ' marker';
+      html += `<div class="${cls}">${f}</div>`;
+    }
+    html += '</div></div><div class="fret-legend">';
+    legendItems.forEach(l => { html += `<div class="fret-legend-item"><span class="fret-legend-dot ${l.cls}"></span>${l.label}</div>`; });
+    html += '</div>';
+    return html;
+  }
+
+  const overlayScaleResult = document.getElementById('overlayScaleResult');
+
+  function showScaleFretboard(root) {
+    if (!root) { scaleFretResult.innerHTML = ''; overlayScaleResult.innerHTML = ''; return; }
+
+    const type = SCALE_TYPES[scaleTypeIdx];
+    const primarySet = getScaleChromatics(root, type.intervals);
+    const chromatic = getChromatic(root);
+    let rootIdx = chromatic.indexOf(root);
+    if (rootIdx === -1) rootIdx = CHROMATIC_SHARPS.indexOf(root);
+
+    let overlaySet = null;
+    if (overlayEnabled && overlayRootVal) {
+      overlaySet = getScaleChromatics(overlayRootVal, SCALE_TYPES[overlayTypeIdx].intervals);
+      const oType = SCALE_TYPES[overlayTypeIdx];
+      const oNotes = getScaleNoteNames(overlayRootVal, oType.intervals);
+      let oHtml = '<div class="scale-display">';
+      for (let i = 0; i < oNotes.length; i++) {
+        const alt = isAltered(oNotes[i]) ? ' altered' : '';
+        oHtml += `<div class="note-pill${alt}"><span class="note-name">${oNotes[i]}</span><span class="degree">${oType.degrees[i]}</span></div>`;
+      }
+      oHtml += `<div class="note-pill${isAltered(oNotes[0]) ? ' altered' : ''}"><span class="note-name">${oNotes[0]}</span><span class="degree">${oType.degrees[0]}</span></div>`;
+      oHtml += '</div>';
+      oHtml += `<div class="summary-card"><div><span class="label">Gamme : </span><span class="value">${overlayRootVal} ${oType.name}</span></div>`;
+      oHtml += `<div><span class="label">Notes : </span><span class="value">${oNotes.join(' \u2014 ')}</span></div></div>`;
+      overlayScaleResult.innerHTML = oHtml;
+    } else {
+      overlayScaleResult.innerHTML = '';
+    }
+
+    // Build noteMap: all notes from either scale
+    const noteMap = {};
+    const membership = {}; // 'primary' | 'overlay' | 'both'
+    for (let chr = 0; chr < 12; chr++) {
+      const inP = primarySet.has(chr);
+      const inO = overlaySet && overlaySet.has(chr);
+      if (inP || inO) {
+        noteMap[chr] = chromatic[chr];
+        if (inP && inO) membership[chr] = 'both';
+        else if (inP) membership[chr] = 'primary';
+        else membership[chr] = 'overlay';
+      }
+    }
+
+    const dotClass = chr => {
+      let c = 'fret-dot';
+      if (chr === rootIdx) c += ' root';
+      else if (membership[chr] === 'both') c += ' both-scales';
+      else if (membership[chr] === 'overlay') c += ' overlay-only';
+      return c;
+    };
+
+    const legend = [{cls:'root',label:'Tonique'},{cls:'note',label: root + ' ' + type.name}];
+    if (overlaySet) {
+      legend.push({cls:'overlay',label: overlayRootVal + ' ' + SCALE_TYPES[overlayTypeIdx].name});
+      legend.push({cls:'both',label:'Communes'});
+    }
+    scaleFretResult.innerHTML = buildFretHtml(noteMap, dotClass, legend);
   }
 
   // ---- Quiz ----
-  let quizCorrect = 0;
-  let quizTotal = 0;
-  let currentAnswer = '';
-  let answered = false;
-  let quizFilterRoot = null;
-
+  let quizCorrect = 0, quizTotal = 0, currentAnswer = '', answered = false, quizFilterRoot = null;
   const quizScore = document.getElementById('quizScore');
   const quizPrompt = document.getElementById('quizPrompt');
   const quizChoices = document.getElementById('quizChoices');
   const quizNext = document.getElementById('quizNext');
   const quizFilter = document.getElementById('quizFilter');
 
-  // Build filter buttons
   const allBtn = document.createElement('button');
   allBtn.textContent = 'Toutes';
   allBtn.classList.add('active');
@@ -867,8 +1495,7 @@ td.root-cell {
   });
 
   function resetQuiz() {
-    quizCorrect = 0;
-    quizTotal = 0;
+    quizCorrect = 0; quizTotal = 0;
     quizScore.textContent = 'Score : 0 / 0';
     newQuestion();
   }
@@ -885,22 +1512,11 @@ td.root-cell {
     quizPrompt.innerHTML = `Quelle est la note au degre <span class="highlight">${DEGREES[degreeIdx]}</span> de la gamme de <span class="highlight">${root}</span> ?`;
 
     const allNotes = [];
-    ROOTS.forEach(r => {
-      const s = getScale(r);
-      for (let i = 0; i < 7; i++) {
-        if (!allNotes.includes(s[i])) allNotes.push(s[i]);
-      }
-    });
+    ROOTS.forEach(r => { const s = getScale(r); for (let i = 0; i < 7; i++) { if (!allNotes.includes(s[i])) allNotes.push(s[i]); } });
 
     const choices = [currentAnswer];
-    while (choices.length < 4) {
-      const pick = allNotes[Math.floor(Math.random() * allNotes.length)];
-      if (!choices.includes(pick)) choices.push(pick);
-    }
-    for (let i = choices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [choices[i], choices[j]] = [choices[j], choices[i]];
-    }
+    while (choices.length < 4) { const pick = allNotes[Math.floor(Math.random() * allNotes.length)]; if (!choices.includes(pick)) choices.push(pick); }
+    for (let i = choices.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [choices[i], choices[j]] = [choices[j], choices[i]]; }
 
     quizChoices.innerHTML = '';
     choices.forEach(c => {
@@ -913,62 +1529,26 @@ td.root-cell {
 
   function checkAnswer(btn, chosen) {
     if (answered) return;
-    answered = true;
-    quizTotal++;
-
-    quizChoices.querySelectorAll('button').forEach(b => {
-      b.disabled = true;
-      if (b.textContent === currentAnswer) b.classList.add('correct');
-    });
-
-    if (chosen === currentAnswer) {
-      quizCorrect++;
-    } else {
-      btn.classList.add('wrong');
-    }
+    answered = true; quizTotal++;
+    quizChoices.querySelectorAll('button').forEach(b => { b.disabled = true; if (b.textContent === currentAnswer) b.classList.add('correct'); });
+    if (chosen === currentAnswer) { quizCorrect++; } else { btn.classList.add('wrong'); }
     quizScore.textContent = `Score : ${quizCorrect} / ${quizTotal}`;
   }
 
   // ---- Harmony ----
-  let harmonyMode = 'major';
-  let harmonyVoicing = 'triad';
-  let harmonyRoot = null;
+  let harmonyMode = 'major', harmonyVoicing = 'triad';
   const harmonyResult = document.getElementById('harmonyResult');
   const modeToggle = document.getElementById('modeToggle');
   const voicingToggle = document.getElementById('voicingToggle');
 
-  function setupToggle(container, onSelect) {
-    container.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        onSelect(btn);
-      });
-    });
-  }
-
-  setupToggle(modeToggle, btn => {
-    harmonyMode = btn.dataset.mode;
-    if (harmonyRoot) showHarmony(harmonyRoot);
-  });
-
-  setupToggle(voicingToggle, btn => {
-    harmonyVoicing = btn.dataset.voicing;
-    if (harmonyRoot) showHarmony(harmonyRoot);
-  });
-
-  buildRootGrid(document.getElementById('harmonyRootGrid'), root => {
-    harmonyRoot = root;
-    showHarmony(root);
-  });
+  setupToggle(modeToggle, btn => { harmonyMode = btn.dataset.mode; if (selectedRoot) showHarmony(selectedRoot); });
+  setupToggle(voicingToggle, btn => { harmonyVoicing = btn.dataset.voicing; if (selectedRoot) showHarmony(selectedRoot); });
 
   function showHarmony(root) {
     const isMajor = harmonyMode === 'major';
     const isTetrad = harmonyVoicing === 'tetrad';
     const scale = buildScale(root, isMajor ? MAJOR_INTERVALS : MINOR_INTERVALS);
-    const qualities = isTetrad
-      ? (isMajor ? MAJOR_TETRAD_QUALITIES : MINOR_TETRAD_QUALITIES)
-      : (isMajor ? MAJOR_QUALITIES : MINOR_QUALITIES);
+    const qualities = isTetrad ? (isMajor ? MAJOR_TETRAD_QUALITIES : MINOR_TETRAD_QUALITIES) : (isMajor ? MAJOR_QUALITIES : MINOR_QUALITIES);
     const degreeLabels = isMajor ? MAJOR_DEGREES_HARMONY : MINOR_DEGREES_HARMONY;
     const modeLabel = isMajor ? 'majeur' : 'mineur';
 
@@ -979,86 +1559,126 @@ td.root-cell {
       let cardClass = 'chord-card';
       if (q === 'dim' || q === 'm7b5') cardClass += ' dim-chord';
       else if (q === 'min' || q === 'm7') cardClass += ' minor-chord';
-
-      html += `<div class="${cardClass}">` +
-        `<span class="chord-degree">${degreeLabels[i]}</span>` +
-        `<span class="chord-name">${scale[i]}${CHORD_SUFFIXES[q] || ''}</span>` +
-        `<span class="chord-quality">${QUALITY_LABELS[q]}</span>` +
-        `<span class="chord-notes">${notes.join(' - ')}</span></div>`;
+      html += `<div class="${cardClass}"><span class="chord-degree">${degreeLabels[i]}</span><span class="chord-name">${scale[i]}${CHORD_SUFFIXES[q] || ''}</span><span class="chord-quality">${QUALITY_LABELS[q]}</span><span class="chord-notes">${notes.join(' - ')}</span></div>`;
     }
     html += '</div>';
-
-    html += '<div class="summary-card">' +
-      `<div><span class="label">Tonalite : </span><span class="value">${root} ${modeLabel}</span></div>` +
-      `<div><span class="label">Gamme : </span><span class="value">${scale.slice(0, 7).join(' — ')}</span></div>` +
-      '</div>';
-
+    html += `<div class="summary-card"><div><span class="label">Tonalite : </span><span class="value">${root} ${modeLabel}</span></div><div><span class="label">Gamme : </span><span class="value">${scale.slice(0, 7).join(' \u2014 ')}</span></div></div>`;
     harmonyResult.innerHTML = html;
   }
 
-  // ---- Fretboard ----
-  const fretResult = document.getElementById('fretResult');
-  const TUNING = [4, 9, 2, 7, 11, 4];
-  const STRING_LABELS = ['Mi','La','Re','Sol','Si','Mi'];
-  const FRET_COUNT = 18;
-  const MARKER_FRETS = [3, 5, 7, 9, 15, 17];
-  const DOUBLE_MARKER = [12];
+  // ---- Qualities ----
+  const MAJOR_DEGREE_QUALITIES = [
+    { degree: 'I', common: ['Maj7','6','6/9','add9'], others: ['Maj9','Maj13','sus2','sus4'] },
+    { degree: 'ii', common: ['m7','m9'], others: ['m11','m6'] },
+    { degree: 'iii', common: ['m7'], others: ['m7sus4'] },
+    { degree: 'IV', common: ['Maj7','6','6/9','add9'], others: ['Maj9','sus2'] },
+    { degree: 'V', common: ['7','9','13'], others: ['7sus4','aug','7#11'] },
+    { degree: 'vi', common: ['m7','m9'], others: ['m11'] },
+    { degree: 'vii\u00B0', common: ['m7b5'], others: ['dim7'] }
+  ];
+  const MINOR_DEGREE_QUALITIES = [
+    { degree: 'i', common: ['m7','mMaj7','m6'], others: ['m9','m11'] },
+    { degree: 'ii\u00B0', common: ['m7b5'], others: ['dim7'] },
+    { degree: 'III', common: ['Maj7'], others: ['aug','Maj9'] },
+    { degree: 'iv', common: ['m7','m9'], others: ['m11','m6'] },
+    { degree: 'V', common: ['7','7b9','7b13'], others: ['7#9','m7'] },
+    { degree: 'VI', common: ['Maj7','6'], others: ['6/9'] },
+    { degree: 'VII', common: ['7','9'], others: [] }
+  ];
 
-  buildRootGrid(document.getElementById('fretRootGrid'), showFretboard);
+  let qualitiesModeCurrent = 'major';
+  const qualitiesResult = document.getElementById('qualitiesResult');
+  const qualitiesMode = document.getElementById('qualitiesMode');
 
-  function showFretboard(root) {
-    const scale = getScale(root);
-    const scaleNotes = scale.slice(0, 7);
-    const chromatic = getChromatic(root);
+  setupToggle(qualitiesMode, btn => { qualitiesModeCurrent = btn.dataset.mode; showQualities(); });
 
-    const scaleIndices = {};
+  function showQualities() {
+    const isMajor = qualitiesModeCurrent === 'major';
+    const data = isMajor ? MAJOR_DEGREE_QUALITIES : MINOR_DEGREE_QUALITIES;
+    const scale = selectedRoot ? buildScale(selectedRoot, isMajor ? MAJOR_INTERVALS : MINOR_INTERVALS) : null;
+
+    let html = '<div class="quality-legend"><span><span class="quality-legend-swatch common"></span>Courant</span><span><span class="quality-legend-swatch other"></span>Possible</span></div>';
+    data.forEach((d, idx) => {
+      const noteName = scale ? scale[idx] : '';
+      html += '<div class="quality-degree">';
+      html += `<div class="quality-degree-header"><span class="quality-degree-num">${d.degree}</span>${noteName ? `<span class="quality-degree-note">${noteName}</span>` : ''}</div>`;
+      html += '<div class="quality-tags">';
+      d.common.forEach(q => { html += `<span class="quality-tag common">${noteName}${q}</span>`; });
+      d.others.forEach(q => { html += `<span class="quality-tag">${noteName}${q}</span>`; });
+      html += '</div></div>';
+    });
+    qualitiesResult.innerHTML = html;
+  }
+
+  showQualities();
+
+  // ---- Chord Fretboard ----
+  let chordVoicing = 'triad', chordDisplay = 'notes', chordDegree = 0;
+  const chordFretResult = document.getElementById('chordFretResult');
+  const chordDegreePicker = document.getElementById('chordDegreePicker');
+  const chordInfoEl = document.getElementById('chordInfo');
+  const chordVoicingToggle = document.getElementById('chordVoicingToggle');
+  const chordDisplayToggle = document.getElementById('chordDisplayToggle');
+
+  setupToggle(chordVoicingToggle, btn => { chordVoicing = btn.dataset.voicing; if (selectedRoot) showChordFretboard(selectedRoot); });
+  setupToggle(chordDisplayToggle, btn => { chordDisplay = btn.dataset.display; if (selectedRoot) showChordFretboard(selectedRoot); });
+
+  function showChordFretboard(root) {
+    if (!root) return;
+    const isTetrad = chordVoicing === 'tetrad';
+    const scale = buildScale(root, MAJOR_INTERVALS);
+    const qualities = isTetrad ? MAJOR_TETRAD_QUALITIES : MAJOR_QUALITIES;
+    const degreeLabels = MAJOR_DEGREES_HARMONY;
+
+    let pickerHtml = '';
     for (let i = 0; i < 7; i++) {
-      let idx = chromatic.indexOf(scaleNotes[i]);
-      if (idx === -1) idx = CHROMATIC_SHARPS.indexOf(scaleNotes[i]);
-      if (idx === -1) idx = CHROMATIC_FLATS.indexOf(scaleNotes[i]);
-      if (idx !== -1) scaleIndices[idx] = scaleNotes[i];
+      const q = qualities[i];
+      const name = scale[i] + (CHORD_SUFFIXES[q] || '');
+      const active = i === chordDegree ? ' active' : '';
+      pickerHtml += `<button class="chord-degree-btn${active}" data-deg="${i}">${name}<span class="deg-label">${degreeLabels[i]}</span></button>`;
     }
+    chordDegreePicker.innerHTML = pickerHtml;
+    chordDegreePicker.querySelectorAll('.chord-degree-btn').forEach(btn => {
+      btn.addEventListener('click', () => { chordDegree = parseInt(btn.dataset.deg); showChordFretboard(selectedRoot); });
+    });
 
-    let rootIdx = chromatic.indexOf(root);
-    if (rootIdx === -1) rootIdx = CHROMATIC_SHARPS.indexOf(root);
+    const degIdx = chordDegree;
+    const chordNotes = getChordNotes(scale, degIdx, isTetrad);
+    const quality = qualities[degIdx];
+    const chordName = scale[degIdx] + (CHORD_SUFFIXES[quality] || '');
+    const intervalShort = isTetrad ? ['R','3','5','7'] : ['R','3','5'];
 
-    let html = '<div class="fret-wrap"><div class="fretboard">';
-    for (let s = 5; s >= 0; s--) {
-      for (let f = 0; f <= FRET_COUNT; f++) {
-        const chrNote = (TUNING[s] + f) % 12;
-        const noteName = scaleIndices[chrNote] || null;
-        const isOpen = f === 0;
-        const cellClass = 'fret-cell' + (isOpen ? ' open-string' : '');
-        html += `<div class="${cellClass}" data-string="${s}">`;
-        if (isOpen && !noteName) {
-          html += STRING_LABELS[s];
-        } else if (noteName) {
-          let dotClass = 'fret-dot';
-          if (chrNote === rootIdx) dotClass += ' root';
-          else if (isAltered(noteName)) dotClass += ' altered-dot';
-          html += `<span class="${dotClass}">${noteName}</span>`;
-        }
-        html += '</div>';
-      }
-    }
-    html += '</div>';
+    chordInfoEl.style.display = '';
+    chordInfoEl.innerHTML = `<span class="ci-name">${chordName}</span><span class="ci-quality">${QUALITY_LABELS[quality]}</span><span class="ci-notes">${chordNotes.map((n, i) => n + ' (' + intervalShort[i] + ')').join(' \u2014 ')}</span>`;
 
-    html += '<div class="fret-numbers">';
-    for (let f = 0; f <= FRET_COUNT; f++) {
-      let numClass = 'fret-num';
-      if (DOUBLE_MARKER.includes(f)) numClass += ' double-marker';
-      else if (MARKER_FRETS.includes(f)) numClass += ' marker';
-      html += `<div class="${numClass}">${f === 0 ? '' : f}</div>`;
-    }
-    html += '</div></div>';
+    const chromatic = getChromatic(root);
+    const chordMap = {};
+    chordNotes.forEach((note, i) => {
+      let idx = chromatic.indexOf(note);
+      if (idx === -1) idx = CHROMATIC_SHARPS.indexOf(note);
+      if (idx === -1) idx = CHROMATIC_FLATS.indexOf(note);
+      if (idx !== -1) chordMap[idx] = { note: note, interval: intervalShort[i], rank: i };
+    });
 
-    html += '<div class="fret-legend">' +
-      '<div class="fret-legend-item"><span class="fret-legend-dot root"></span>Tonique</div>' +
-      '<div class="fret-legend-item"><span class="fret-legend-dot note"></span>Note</div>' +
-      '<div class="fret-legend-item"><span class="fret-legend-dot alt"></span>Alteree</div>' +
-      '</div>';
+    const chordNoteMap = {};
+    Object.keys(chordMap).forEach(k => {
+      const m = chordMap[k];
+      chordNoteMap[k] = chordDisplay === 'intervals' ? m.interval : m.note;
+    });
 
-    fretResult.innerHTML = html;
+    const dotClass = chr => {
+      const m = chordMap[chr];
+      let c = 'fret-dot';
+      if (m.rank === 0) c += ' root';
+      else if (m.rank === 1) c += ' chord-third';
+      else if (m.rank === 2) c += ' chord-fifth';
+      else if (m.rank === 3) c += ' chord-seventh';
+      return c;
+    };
+
+    const legend = [{cls:'root',label:'Fondamentale'},{cls:'third',label:'Tierce'},{cls:'fifth',label:'Quinte'}];
+    if (isTetrad) legend.push({cls:'seventh',label:'Septieme'});
+    chordFretResult.innerHTML = buildFretHtml(chordNoteMap, dotClass, legend);
   }
 
   // ---- Table ----
@@ -1067,32 +1687,21 @@ td.root-cell {
   const tableBody = document.getElementById('tableBody');
 
   function renderTable() {
-    const rows = ROOTS.map(root => ({
-      root, scale: getScale(root), info: altInfo(root), sharps: ROOT_SHARPS[root]
-    }));
-
-    rows.sort((a, b) => sortAsc ? a.sharps - b.sharps : b.sharps - a.sharps);
-
-    sortBtn.innerHTML = `Alt. <span class="sort-arrow">${sortAsc ? '▲' : '▼'}</span>`;
-
+    const sourceRoots = selectedRoot ? [selectedRoot] : ROOTS;
+    const rows = sourceRoots.map(root => ({ root, scale: getScale(root), info: altInfo(root), sharps: ROOT_SHARPS[root] }));
+    if (!selectedRoot) rows.sort((a, b) => sortAsc ? a.sharps - b.sharps : b.sharps - a.sharps);
+    sortBtn.innerHTML = `Alt. <span class="sort-arrow">${sortAsc ? '\u25B2' : '\u25BC'}</span>`;
     let html = '';
     rows.forEach(r => {
       html += `<tr><td class="root-cell">${r.root}</td>`;
-      for (let i = 0; i < 7; i++) {
-        const cls = isAltered(r.scale[i]) ? ' class="altered"' : '';
-        html += `<td${cls}>${r.scale[i]}</td>`;
-      }
-      const altLabel = r.info.count === 0 ? '—' : (r.info.count + (r.info.type === 'dieses' ? '♯' : '♭'));
+      for (let i = 0; i < 7; i++) { const cls = isAltered(r.scale[i]) ? ' class="altered"' : ''; html += `<td${cls}>${r.scale[i]}</td>`; }
+      const altLabel = r.info.count === 0 ? '\u2014' : (r.info.count + (r.info.type === 'dieses' ? '\u266F' : '\u266D'));
       html += `<td>${altLabel}</td></tr>`;
     });
     tableBody.innerHTML = html;
   }
 
-  sortBtn.addEventListener('click', () => {
-    sortAsc = !sortAsc;
-    renderTable();
-  });
-
+  sortBtn.addEventListener('click', () => { sortAsc = !sortAsc; renderTable(); });
   renderTable();
 })();
 </script>
