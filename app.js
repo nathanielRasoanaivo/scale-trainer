@@ -43,6 +43,10 @@
   const MARKER_FRETS = [3, 5, 7, 9, 15, 17];
   const DOUBLE_MARKER = [12];
 
+  const IS_BLACK = [false, true, false, true, false, false, true, false, true, false, true, false];
+  const BLACK_POS = { 1: 1, 3: 2, 6: 4, 8: 5, 10: 6 };
+  const PIANO_OCTAVES = 2;
+
   const SCALE_TYPES = [
     { name: 'Majeure',        intervals: [0,2,4,5,7,9,11],  degrees: ['I','II','III','IV','V','VI','VII'] },
     { name: 'Min. naturelle', intervals: [0,2,3,5,7,8,10],  degrees: ['I','II','bIII','IV','V','bVI','bVII'] },
@@ -157,7 +161,7 @@
         btn.classList.add('active');
         document.getElementById(btn.dataset.sub).classList.add('active');
         if (btn.dataset.sub === 'tools-quiz' && quizTotal === 0) newQuestion();
-        if (btn.dataset.sub === 'tools-quiz') fretRangeEl.style.display = 'none';
+        if (btn.dataset.sub === 'tools-quiz' || instrument === 'piano') fretRangeEl.style.display = 'none';
         else if (parent.id === 'tools') fretRangeEl.style.display = '';
       });
     });
@@ -217,6 +221,18 @@
       });
     });
   }
+
+  // ---- Instrument toggle ----
+  let instrument = 'guitar';
+  const instrumentToggle = document.getElementById('instrumentToggle');
+  setupToggle(instrumentToggle, btn => {
+    instrument = btn.dataset.instrument;
+    fretRangeEl.style.display = instrument === 'piano' ? 'none' : '';
+    if (selectedRoot) {
+      showScaleFretboard(selectedRoot);
+      showChordFretboard(selectedRoot);
+    }
+  });
 
   // ---- Learn: Scale ----
   const scaleResult = document.getElementById('scaleResult');
@@ -383,6 +399,51 @@
     return html;
   }
 
+  // Piano keyboard HTML builder
+  function buildKeyboardHtml(noteMap, dotClassFn, legendItems) {
+    const WHITE_W = 44;
+    const BLACK_W = 28;
+    const totalWhite = 7 * PIANO_OCTAVES;
+
+    let html = `<div class="piano-wrap"><div class="piano-keyboard" style="width:${totalWhite * WHITE_W}px">`;
+
+    // White keys
+    for (let o = 0; o < PIANO_OCTAVES; o++) {
+      for (let i = 0; i < 12; i++) {
+        if (IS_BLACK[i]) continue;
+        html += '<div class="piano-key white">';
+        if (noteMap[i] !== undefined) {
+          html += `<span class="${dotClassFn(i)}">${noteMap[i]}</span>`;
+        }
+        html += '</div>';
+      }
+    }
+
+    // Black keys (absolute)
+    for (let o = 0; o < PIANO_OCTAVES; o++) {
+      for (let i = 0; i < 12; i++) {
+        if (!IS_BLACK[i]) continue;
+        const left = (BLACK_POS[i] + o * 7) * WHITE_W - BLACK_W / 2;
+        html += `<div class="piano-key black" style="left:${left}px">`;
+        if (noteMap[i] !== undefined) {
+          html += `<span class="${dotClassFn(i)}">${noteMap[i]}</span>`;
+        }
+        html += '</div>';
+      }
+    }
+
+    html += '</div></div><div class="fret-legend">';
+    legendItems.forEach(l => { html += `<div class="fret-legend-item"><span class="fret-legend-dot ${l.cls}"></span>${l.label}</div>`; });
+    html += '</div>';
+    return html;
+  }
+
+  function buildInstrumentHtml(noteMap, dotClassFn, legendItems) {
+    return instrument === 'piano'
+      ? buildKeyboardHtml(noteMap, dotClassFn, legendItems)
+      : buildFretHtml(noteMap, dotClassFn, legendItems);
+  }
+
   const overlayScaleResult = document.getElementById('overlayScaleResult');
 
   function showScaleFretboard(root) {
@@ -440,7 +501,7 @@
       legend.push({cls:'overlay',label: overlayRootVal + ' ' + SCALE_TYPES[overlayTypeIdx].name});
       legend.push({cls:'both',label:'Communes'});
     }
-    scaleFretResult.innerHTML = buildFretHtml(noteMap, dotClass, legend);
+    scaleFretResult.innerHTML = buildInstrumentHtml(noteMap, dotClass, legend);
   }
 
   // ---- Quiz ----
@@ -658,7 +719,7 @@
 
     const legend = [{cls:'root',label:'Fondamentale'},{cls:'third',label:'Tierce'},{cls:'fifth',label:'Quinte'}];
     if (isTetrad) legend.push({cls:'seventh',label:'Septieme'});
-    chordFretResult.innerHTML = buildFretHtml(chordNoteMap, dotClass, legend);
+    chordFretResult.innerHTML = buildInstrumentHtml(chordNoteMap, dotClass, legend);
   }
 
   // ---- Table ----

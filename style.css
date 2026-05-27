@@ -38,6 +38,9 @@
   --dot-seventh: #7040A0;
   --dot-overlay: #3A8FB7;
   --dot-both: #2E8B57;
+  --piano-white: #FFFEF8;
+  --piano-white-border: #C8C0B0;
+  --piano-black: #2C2420;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -73,6 +76,9 @@
     --dot-seventh: #B080D8;
     --dot-overlay: #5CB8D6;
     --dot-both: #4CAF6A;
+    --piano-white: #3A3530;
+    --piano-white-border: #504838;
+    --piano-black: #1A1614;
   }
 }
 
@@ -656,6 +662,98 @@ td.root-cell {
 .fret-dot.both-scales { background: var(--dot-both); }
 .fret-legend-dot.overlay { background: var(--dot-overlay); }
 .fret-legend-dot.both { background: var(--dot-both); }
+
+/* ========== INSTRUMENT TOGGLE ========== */
+.instrument-toggle {
+  display: flex;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+.instrument-toggle button {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.instrument-toggle button:hover { color: var(--text); background: var(--accent-soft); }
+.instrument-toggle button.active { background: var(--accent); color: var(--accent-text); }
+
+/* ========== PIANO KEYBOARD ========== */
+.piano-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -20px;
+  padding: 0 0 12px 0;
+  display: flex;
+  justify-content: center;
+}
+.piano-keyboard {
+  position: relative;
+  display: flex;
+  margin: 0 20px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  overflow: visible;
+  box-shadow: var(--shadow-md);
+}
+.piano-key {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.piano-key.white {
+  width: 44px;
+  height: 160px;
+  background: var(--piano-white);
+  border: 1.5px solid var(--piano-white-border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.piano-key.white + .piano-key.white {
+  margin-left: -1.5px;
+}
+.piano-key.black {
+  position: absolute;
+  width: 28px;
+  height: 100px;
+  background: var(--piano-black);
+  border-radius: 0 0 4px 4px;
+  z-index: 2;
+  padding-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.piano-key .fret-dot {
+  flex-shrink: 0;
+  font-size: 9px;
+  width: 24px;
+  height: 24px;
+}
+.piano-key.white .fret-dot {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+.piano-key .fret-dot.root {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+.piano-key.white .fret-dot.root {
+  width: 30px;
+  height: 30px;
+  font-size: 11px;
+}
 
 /* ========== OVERLAY CONTROLS ========== */
 .scale-config {
